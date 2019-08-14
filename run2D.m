@@ -20,7 +20,7 @@ step_size = f*(min(state.H/n_row, state.cyclic_boundary(1)/n_col)-2*state.rad);
 for i=1:N_real
     t = rand*2*pi;
     i_p = randi(N);
-    state = metropolis_step(state, i_p, step_size*[cos(t) sin(t)]);
+    [state, ~] = metropolis_step(state, i_p, step_size*[cos(t) sin(t)]);
 end
 %%
 subplot(1,2,2);

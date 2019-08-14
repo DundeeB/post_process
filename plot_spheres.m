@@ -8,7 +8,7 @@ H = state.H;
 cyclic_boundary = state.cyclic_boundary;
 [N,~] = size(spheres);
 r = rad;
-hold on; xlabel('X'); ylabel('Y'); zlabel('Z');set(gca,'FontSize',18);
+hold on; xlabel('X'); ylabel('Y'); zlabel('Z');set(gca,'FontSize',14);
 for i=1:N
     x0 = spheres(i,1);
     y0 = spheres(i,2);
