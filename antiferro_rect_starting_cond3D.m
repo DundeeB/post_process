@@ -1,14 +1,13 @@
 function [spheres] = antiferro_rect_starting_cond3D(N, box, r)
-if length(N) == 2
-    n = N(1)*N(2);
-else
-    n = N(1)*N(2)*N(3);
+n = N(1)*N(2);
+if length(N) ~= 2
+    assert(N(3) == 1);
 end
 spheres = zeros(n,length(N));
 dr = box./N;
 for i=1:N(1)
     for j=1:N(2)
-        if length(dr) == 2
+        if length(box) == 2
             spheres((i-1)*N(2)+j,:) = [i-0.5, j-0.5].*dr;
         else
             if mod(i+j,2) == 0
