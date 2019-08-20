@@ -1,6 +1,6 @@
 tic;
 h = 0.7
-rho_H = 0.7
+rho_H = 0.9
 n_row = 30;
 n_col = 30;
 N = n_row * n_col
