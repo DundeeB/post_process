@@ -8,6 +8,6 @@ kr = spheres*k;
 S = zeros(Nk,1);
 for i=1:Nk
     v = exp(1i*kr(:,i));
-    S(i) = 1/Ns*sum(sum(v*v'));
+    S(i) = 1/Ns^2*abs(sum(sum(v*v')));
 end
 end
