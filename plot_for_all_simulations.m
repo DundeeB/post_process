@@ -25,29 +25,30 @@ for i=1:n
     h_vec(i) = str2double(regexprep(regexprep(...
         sim_dirs{i},'.*h=',''),'_rhoH.*',''));
     
-    cd(sim_dirs{i});
+%     cd(sim_dirs{i});
     try
-        load('output.mat');
-        psi_vec(i) = psi14(end);
+%         load('output.mat');
+%         psi_vec(i) = psi14(end);
         
-        load('Input_parameters.mat');
-        a = 2*state.rad/sqrt(rho_H*(h+1));
-        S_convergence = calc_Sm_Bragg_for_lib('.',pi/a*[1,1]', state.rad*(h+1));
+%         load('Input_parameters.mat');
+        rad = 1;
+        a = 2*rad/sqrt(rho_H_vec(i)*(h_vec(i)+1));
+        S_convergence = calc_Sm_Bragg_for_lib(sim_dirs{i},pi/a*[1,1]', rad*(h_vec(i)+1));
         Sm_pi_pi(i) = S_convergence(end);
     end
-    cd('../../');
+%     cd('../../');
 end
 %%
-figure; hold all; title('h=0.7');
-I1 = h_vec==0.7 & N_vec==900;
-I2 = h_vec==0.7 & N_vec==3600;
-plot(rho_H_vec(I1),psi_vec(I1),'o--','MarkerSize',10);
-plot(rho_H_vec(I2),psi_vec(I2),'o--','MarkerSize',10);
-legend('N=900','N=3600','Location','NorthWest');
-set(gca,'FontSize',24);
-xlabel('\rho_H');
-ylabel('|\psi_{14}|');
-grid on;
+% figure; hold all; title('h=0.7');
+% I1 = h_vec==0.7 & N_vec==900;
+% I2 = h_vec==0.7 & N_vec==3600;
+% plot(rho_H_vec(I1),psi_vec(I1),'o--','MarkerSize',10);
+% plot(rho_H_vec(I2),psi_vec(I2),'o--','MarkerSize',10);
+% legend('N=900','N=3600','Location','NorthWest');
+% set(gca,'FontSize',24);
+% xlabel('\rho_H');
+% ylabel('|\psi_{14}|');
+% grid on;
 %%
 h=figure; hold all; title('\rho_H=0.4');
 I1 = rho_H_vec==0.4 & N_vec==900;
@@ -56,7 +57,7 @@ plot(h_vec(I1),Sm_pi_pi(I1),'o--','MarkerSize',10);
 plot(h_vec(I2),Sm_pi_pi(I2),'o--','MarkerSize',10);
 legend('N=900','N=3600','Location','NorthWest');
 set(gca,'FontSize',24);
-xlabel('\rho_H');
+xlabel('h');
 ylabel('<|z(k=(\pi,\pi))|^2>');
 grid on;
 savefig(h,'simulation-results\magnetic_Bragg_vs_h');
