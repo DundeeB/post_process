@@ -1,7 +1,7 @@
 %% simulation dir and parameters
 N = 900;
-h = 0.1;
-rhoH = 0.1;
+h = 0.2;
+rhoH = 0.4;
 rad = 1; sig = 2*rad;
 a = sig/sqrt(rhoH*(h+1));
 lib = ['simulation-results\N=' num2str(N) '_h=' num2str(h) '_rhoH=' num2str(rhoH)];
