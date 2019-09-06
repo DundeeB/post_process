@@ -8,7 +8,7 @@ lib = ['simulation-results\N=' num2str(N) '_h=' num2str(h) '_rhoH=' num2str(rhoH
 %% kx Bragg picks at 2pi
 k=[];
 kx_max = 3.5*pi/a;
-kx_len = 3;
+kx_len = 14;
 dk = kx_max/kx_len;
 kx = dk:dk:kx_max;
 %%
@@ -27,7 +27,9 @@ z0 = sig*(1+h)/2;
 Sm_convergence = calc_Sm_Bragg_for_lib(lib,kxy, z0);
 Sm = abs(Sm_convergence(end,:));
 toc
+
 %% plot all
+
 figure;
 
 plot(kx*a/pi,S,'o--');
