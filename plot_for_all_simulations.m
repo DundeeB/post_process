@@ -69,7 +69,7 @@ plot(h_vec(I1),Sm_pi_pi(I1),'o--','MarkerSize',10);
 plot(h_vec(I2),Sm_pi_pi(I2),'o--','MarkerSize',10);
 legend('N=900','N=3600','Location','NorthWest');
 set(gca,'FontSize',24);
-xlabel('\rho_H');
+xlabel('h');
 ylabel('<|z(k=(\pi,\pi))|^2>');
 grid on;
 savefig(h,'simulation-results\magnetic_Bragg_vs_h');

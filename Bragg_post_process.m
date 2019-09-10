@@ -49,7 +49,7 @@ ylabel('Order Parameter');
 title(sim_name);
 grid on; 
 legend('<|S|^2>','(2\pi, 2\pi)','<|z(k)|^2>','(\pi, \pi)','Location','North');
-
+savefig(f,[lib '\S45_Sm45_k']);
 %% S_m theta dependence
 theta = pi/2*(0:1/4:5/4);  % len 6, contains pi/4 pi/2
 kxy = (dk/cos(pi/4))*[cos(theta); sin(theta)];  % contains (pi pi)
@@ -74,8 +74,8 @@ xlabel('\theta');
 ylabel('|S|^2 at |k|=2^{1/2}\pi');
 title(sim_name);
 grid on; 
-legend('<|z(k)|^2>',...
-    'Location','NorthEast');
+legend('<|z(k)|^2>','Location','NorthEast');
+savefig(g,[lib '\Sm_theta']);
 %% plot theta convergence
 e = figure;
 
@@ -91,7 +91,7 @@ xlabel('# realizations sumed into S_m');
 ylabel('<|z(k)|^2>');
 title(sim_name);
 grid on; 
-
+savefig(e,[lib '\Convergence of Sm_theta']);
 %% close figures
 if ~plot_flag
     close(f,g,e);
