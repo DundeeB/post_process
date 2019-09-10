@@ -88,6 +88,6 @@ parfor i = 1:length(I)
     toc;
     %%
     tic;
-    post_process_and_save(['simulation-results\' sim_name],false);
+    post_process(['simulation-results\' sim_name],false, 'output');
     toc;
 end
