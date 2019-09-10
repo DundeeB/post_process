@@ -1,8 +1,8 @@
 for rho_H = 0.4
     tic;
     h = 0.6;
-    n_row = 60;
-    n_col = 60;
+    n_row = 30;
+    n_col = 30;
     N = n_row * n_col;
 
     state.rad = 1;
