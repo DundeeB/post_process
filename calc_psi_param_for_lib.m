@@ -12,17 +12,19 @@ else
 end
 count = 0;
 for i=length(dir_struct):-1:1
-    fold = dir_struct(i).name;
+    sphere_file = dir_struct(i).name;
     try
-        spheres = dlmread(fold);
+        spheres = dlmread(sphere_file);
         psi(end+1) = psi(end) + psi_order_parameter(n, m, spheres, 1.2*2*state.rad);
         count = count + 1;
         if count >= N_max
             break;
         end
     catch err
-        if strcmp(err.identifier,'MATLAB:textscan:handleErrorAndShowInfo')
-            disp([fold ' is not spheres data folder']);
+        if sum(strcmp(err.identifier,...
+            {'MATLAB:textscan:handleErrorAndShowInfo',...
+            'MATLAB:dlmread:FileNotOpened'}))
+            disp([sphere_file ' is not spheres data folder']);
         else
             cd(homeDir);
             rethrow(err)
