@@ -68,7 +68,7 @@ parfor i = 1:length(I)
             disp([num2str(i/N_real*100) '%']);
         end
 
-        if (mod(i,N_save) == 0 && i > N_start) || i==1 || i==N_real
+        if (mod(i,N_save) == 0 && i > N_start) || i==N_real
             dlmwrite(num2str(i),state.spheres,'\t');
         end
     end

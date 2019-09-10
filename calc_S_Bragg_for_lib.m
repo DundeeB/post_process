@@ -17,13 +17,15 @@ for i=length(dir_struct):-1:1
     try
         spheres = dlmread(fold);
         j = j+1;
-        I(end+1) = i;
+        I(end+1) = j;
         S(j,:) = S(j-1,:) + S_Bragg(k, spheres)';
         if j >= N_max + 1
             break
         end
     catch err
-        if strcmp(err.identifier,'MATLAB:textscan:handleErrorAndShowInfo')
+        if sum(strcmp(err.identifier,...
+            {'MATLAB:textscan:handleErrorAndShowInfo',...
+            'MATLAB:dlmread:FileNotOpened'}))
             disp([fold ' is not spheres data folder']);
         else
             cd(homeDir);
@@ -32,6 +34,6 @@ for i=length(dir_struct):-1:1
     end
 end
 norm = (1:length(I))'.^-1*ones(1,Nk);
-S = S(2:end,:).*norm;
+S = S(I,:).*norm;
 cd(homeDir);
 end

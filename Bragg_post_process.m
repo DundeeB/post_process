@@ -22,7 +22,7 @@ switch nargin
     case 2
         S45 = calc_S_Bragg_for_lib(lib,k45);
 end
-S45fin = S45(end,:);
+S45fin = abs(S45(end,:));
 toc
 %% S_m 45
 tic
