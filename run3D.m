@@ -1,9 +1,23 @@
-for rho_H = [0.7 0.8 0.9 1]
+
+rho_H_arr = [0.7 0.8 0.9 1];
+I = ones(1, length(rho_H));
+h_arr = 0.7*I;
+n_row_arr = 30*I;
+n_col_arr = 30*I;
+
+IC_pool = {'square','triangle'};
+Initial_Conditions_arr(1:length(I)) = {IC_pool{1}};
+
+parfor i = 1:length(I)
     tic;
-    h = 0.7;
-    n_row = 30;
-    n_col = 30;
+    rho_H = rho_H_arr(i);
+    h = h_arr(i);
+    n_row = n_row_arr(i);
+    n_col = n_col_arr(i);
     N = n_row * n_col;
+    C = Initial_Conditions_arr(i);
+    Initial_Conditions = C{1};
+    
 
     state.rad = 1;
     state.H = (h+1)*2*state.rad;
@@ -12,13 +26,19 @@ for rho_H = [0.7 0.8 0.9 1]
     A = state.cyclic_boundary(2)*state.cyclic_boundary(1);
     eta2D = N*pi*state.rad^2/A;
     eta3D = N*4*pi/3*state.rad^3/(A*state.H);
-    sim_name = ['N=' num2str(N) '_h=' num2str(h), '_rhoH=' num2str(rho_H)]
+    switch Initial_Conditions
+        case IC_pool{1}
+            state.spheres = antiferro_rect_starting_cond3D([n_col n_row 1],[state.cyclic_boundary state.H],state.rad);
+            sim_name = ['N=' num2str(N) '_h=' num2str(h), '_rhoH=' num2str(rho_H) '_' IC_pool{1}]
+    	case IC_pool{2}
+            state.spheres = ferro_triang_starting_cond3D([n_col n_row 1],[state.cyclic_boundary state.H],state.rad);
+            sim_name = ['N=' num2str(N) '_h=' num2str(h), '_rhoH=' num2str(rho_H) '_' IC_pool{2}]
+    end
     title_name = ['N=' num2str(N) ', h=' num2str(h), ', \rho_H=' num2str(rho_H)];
     %%
     addpath('.');
     cd('simulation-results'); mkdir(sim_name); cd(sim_name);
     %%
-    state.spheres = antiferro_rect_starting_cond3D([n_col n_row 1],[state.cyclic_boundary state.H],state.rad);
     if ~legal_configuration(state,1)
         cd('../..');
         error('too many spheres');

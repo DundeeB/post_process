@@ -3,7 +3,7 @@ psi14 = calc_psi_param_for_lib(lib, 1, 4);
 %%
 I = [1:length(psi14)];
 psi_current = diff(psi14.*I);
-h=figure; 
+h = figure; 
 plot(I,psi14,'Black','LineWidth',3);
 hold all; plot(I(1:end-1),psi_current,'b');
 plot([0 I(end)],[psi14(end) psi14(end)],'--m','LineWidth',5);
