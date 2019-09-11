@@ -72,15 +72,15 @@ parfor i = 1:length(I)
             dlmwrite(num2str(i),state.spheres,'\t');
         end
     end
-    %%
-    spheres = dlmread('1');
-    first_state = state;
-    first_state.spheres = spheres;
-    subplot(1,2,1);
-    plot_spheres(first_state); title(title_name);
-    subplot(1,2,2);
-    plot_spheres(state); title([num2str(i) ' step. Acceptance rate: ' ...
+    %% write first and last sphere
+    subplot(1,2,2); 
+    plot_spheres(state); 
+    title([num2str(i) ' step. Acceptance rate: ' ...
         num2str(100*q/i) '%, steps per sphere: ' num2str(q/N)]);
+    load('Input_parameters');
+    subplot(1,2,1); 
+    plot_spheres(state); 
+    title(title_name);
     savefig('Starting_and_Final_configuration.fig')
     close all;
     %%
