@@ -1,8 +1,8 @@
-h_arr = 1:-0.1:0.4;
+h_arr = [1:-0.1:0.4 1:-0.1:0.4];
 I = ones(1, length(h_arr));
 rho_H_arr = 0.4*I;
-n_row_arr = 100*I;
-n_col_arr = 100*I;
+n_row_arr = [10 10 10 10 10 10 10 20 20 20 20 20 20 20];
+n_col_arr = n_row_arr;
 
 IC_pool = {'square','triangle'};
 Initial_Conditions_arr(1:length(I)) = {IC_pool{2}};

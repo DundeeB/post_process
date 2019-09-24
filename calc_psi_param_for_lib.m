@@ -19,4 +19,3 @@ end
 psi = psi(2:end)./[1:length(psi)-1];
 cd(homeDir);
 end
-

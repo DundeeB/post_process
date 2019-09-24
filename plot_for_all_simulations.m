@@ -26,31 +26,43 @@ for i=1:n
     cd(sim_dirs{i});
     try
         load('output.mat');
-        psi_vec(i) = psi14(end);
-        Sm_pi_pi(i) = max(Sm_theta(end,:));
+        psi_vec(i) = psi14(end-50);
+        I = find(theta*180/pi==45,1,'first');
+        Sm_pi_pi(i) = Sm_theta(end-50,I);
+    catch err
+        disp(err.message)
     end
     cd('../../');
 end
 %%
-figure; hold all; title('h=0.7');
-I1 = h_vec==0.7 & N_vec==900;
-I2 = h_vec==0.7 & N_vec==3600;
-plot(rho_H_vec(I1),psi_vec(I1),'o--','MarkerSize',10);
-plot(rho_H_vec(I2),psi_vec(I2),'o--','MarkerSize',10);
-legend('N=900','N=3600','Location','NorthWest');
-set(gca,'FontSize',24);
-xlabel('\rho_H');
+h=figure; 
+
+subplot(2,1,1); hold all;
+I = h_vec==0.7 & N_vec==3600;
+I2 = h_vec==0.7 & N_vec==900;
+plot(rho_H_vec(I),(psi_vec(I)),'.--','MarkerSize',30);
+plot(rho_H_vec(I2),(psi_vec(I2)),'.-','MarkerSize',10);
+xlabel('\rho_H'); 
+legend('h=0.7, N=3600','h=0.7, N=900','Location','NorthWest');
 ylabel('|\psi_{14}|');
-grid on;
-%%
-h=figure; hold all; title('\rho_H=0.4');
-I1 = rho_H_vec==0.4 & N_vec==900;
-I2 = rho_H_vec==0.4 & N_vec==3600;
-plot(h_vec(I1),Sm_pi_pi(I1),'o--','MarkerSize',10);
-plot(h_vec(I2),Sm_pi_pi(I2),'o--','MarkerSize',10);
-legend('N=900','N=3600','Location','NorthWest');
-set(gca,'FontSize',24);
+set(gca,'FontSize',20); grid on;
+
+subplot(2,1,2); hold all;
+I = rho_H_vec==0.4 & N_vec==3600;
+I2 = rho_H_vec==0.4 & N_vec==900;
+I3 = rho_H_vec==0.4 & N_vec==400;
+I4 = rho_H_vec==0.4 & N_vec==100;
+plot(h_vec(I),Sm_pi_pi(I).*N_vec(I)./(2*(h_vec(I))).^2,'.--','MarkerSize',30);
+plot(h_vec(I2),Sm_pi_pi(I2).*N_vec(I2)./(2*(h_vec(I2))).^2,'.-','MarkerSize',10);
+plot(h_vec(I3),Sm_pi_pi(I3).*N_vec(I3)./(2*(h_vec(I3))).^2,'.-','MarkerSize',10);
+% plot(h_vec(I4),Sm_pi_pi(I4).*N_vec(I4)./(2*(h_vec(I4))).^2,'.-','MarkerSize',10);
+% plot(h_vec(I),Sm_pi_pi(I).*N_vec(I),'.--','MarkerSize',30);
+% plot(h_vec(I2),Sm_pi_pi(I2).*N_vec(I2),'.-','MarkerSize',10);
+% plot(h_vec(I3),Sm_pi_pi(I3).*N_vec(I3),'.-','MarkerSize',10);
 xlabel('h');
-ylabel('<|z(k=(\pi,\pi))|^2>');
-grid on;
+grid on;title('\rho_H=0.4');
+legend('N=3600','N=900','N=400','N=100','Location','NorthWest');
+ylabel('<|z(k=(\pi,\pi))/(h\sigma)|^2>');
+set(gca,'FontSize',20);
+
 savefig(h,'simulation-results\magnetic_Bragg_vs_h');
