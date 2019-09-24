@@ -5,5 +5,5 @@ for i=1:length(folds)
             {'.','..','Small or 2D simulations'}))
         continue;
     end
-    post_process([sim_res_name folds(i).name],false,'output');
+    post_process([sim_res_name folds(i).name],false,'output',100);
 end

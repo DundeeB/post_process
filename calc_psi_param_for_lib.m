@@ -12,9 +12,10 @@ else
     N_max = N_realizations;
 end
 j = 1;
+load('Input_parameters'); H = state.H;
 for i=N_sph_files:-1:N_sph_files-N_max+1
     spheres = dlmread(files{i});
-    psi(end+1) = psi(end) + psi_order_parameter(n, m, spheres, 1.2*2*state.rad);
+    psi(end+1) = psi(end) + psi_order_parameter(n, m, spheres, 1.2*2*state.rad,H);
 end
 psi = psi(2:end)./[1:length(psi)-1];
 cd(homeDir);
