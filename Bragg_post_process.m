@@ -8,7 +8,7 @@ a = sig/sqrt(rho_H*(h+1));
 %% k45 -  Bragg picks at 2pi
 k45 = [];
 dk = pi/a;
-kx = dk*(0.5:0.5:2.5);  % len 5, contains pi pi and 2pi 2pi
+kx = dk*[0.5 0.9 0.95 1 1.05 1.1 1.5 1.9 1.95 2 2.05 2.1 2.5];  % contains pi pi and 2pi 2pi
 for kx_=kx
     k45 = [k45 [kx_ kx_ 0]'];
 end
@@ -22,7 +22,7 @@ switch nargin
     case 2
         S45 = calc_S_Bragg_for_lib(lib,k45);
 end
-S45fin = abs(S45(end,:));
+S45fin = abs(S45(3/4*end,:));
 toc
 %% S_m 45
 tic
@@ -32,7 +32,7 @@ switch nargin
     case 2
         Sm45 = calc_Sm_Bragg_for_lib(lib,kxy, z0);
 end
-Sm45fin = abs(Sm45(end,:));
+Sm45fin = abs(Sm45(3/4*end,:));
 toc
 
 %% plot S45 and Sm45
@@ -62,7 +62,7 @@ switch nargin
     case 2
         Sm_theta = calc_Sm_Bragg_for_lib(lib,kxy, z0);
 end
-Sm_theta_fin = abs(Sm_theta(end,:));
+Sm_theta_fin = abs(Sm_theta(3/4*end,:));
 toc;
 %% plot theta dependence
 g = figure;

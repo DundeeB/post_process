@@ -28,7 +28,9 @@ for i=1:n
         load('output.mat');
         I = find(theta*180/pi==45,1,'first');
         Sm_pi_pi(i) = Sm_theta(end-50,I);
-        load('correct_psi_100_real');
+        try
+            load('correct_psi_100_real');
+        end
         psi_vec(i) = psi14(end);
     catch err
         disp(err.message)
@@ -53,17 +55,9 @@ I = rho_H_vec==0.4 & N_vec==3600;
 I2 = rho_H_vec==0.4 & N_vec==900;
 I3 = rho_H_vec==0.4 & N_vec==400;
 I4 = rho_H_vec==0.4 & N_vec==100;
-% plot(h_vec(I),Sm_pi_pi(I).*N_vec(I)./(2*(h_vec(I))).^2,'.--','MarkerSize',30);
-% plot(h_vec(I2),Sm_pi_pi(I2).*N_vec(I2)./(2*(h_vec(I2))).^2,'.-','MarkerSize',10);
-% plot(h_vec(I3),Sm_pi_pi(I3).*N_vec(I3)./(2*(h_vec(I3))).^2,'.-','MarkerSize',10);
 plot(h_vec(I),Sm_pi_pi(I),'.--','MarkerSize',30);
 plot(h_vec(I2),Sm_pi_pi(I2),'.-','MarkerSize',10);
 plot(h_vec(I3),Sm_pi_pi(I3),'.-','MarkerSize',10);
-
-% plot(h_vec(I4),Sm_pi_pi(I4).*N_vec(I4)./(2*(h_vec(I4))).^2,'.-','MarkerSize',10);
-% plot(h_vec(I),Sm_pi_pi(I).*N_vec(I),'.--','MarkerSize',30);
-% plot(h_vec(I2),Sm_pi_pi(I2).*N_vec(I2),'.-','MarkerSize',10);
-% plot(h_vec(I3),Sm_pi_pi(I3).*N_vec(I3),'.-','MarkerSize',10);
 xlabel('h');
 grid on;title('\rho_H=0.4');
 legend('N=3600','N=900','N=400','N=100','Location','NorthWest');
@@ -71,3 +65,12 @@ ylabel('<|z(k=(\pi,\pi))/(h\sigma)|^2>');
 set(gca,'FontSize',20);
 
 savefig(h,'simulation-results\magnetic_Bragg_vs_h');
+%%
+g=figure; 
+I = h_vec==0.7 & N_vec==900;
+plot(rho_H_vec(I),(psi_vec(I)),'.--','MarkerSize',30);
+legend('N=900, h=0.7','Location','NorthWest');
+ylabel('|\psi_{14}|');
+grid on;
+set(gca,'FontSize',20);
+xlabel('\rho_H'); 

@@ -10,6 +10,6 @@ kr = r*k;
 Sm = zeros(Nk,1);
 for i=1:Nk
     v = z.*exp(1i*kr(:,i));
-    Sm(i) = abs(1/Ns^2*sum(sum(v*v')));
+    Sm(i) = abs(1/Ns*sum(sum(v*v')));
 end
 end

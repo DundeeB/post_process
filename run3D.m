@@ -1,13 +1,14 @@
 h_arr = 1:-0.1:0.4;
 I = ones(1, length(h_arr));
-rho_H_arr = 0.4*I;
-n_row_arr = 100*I;
-n_col_arr = 100*I;
+h_arr = [h_arr h_arr];
+rho_H_arr = 0.6*[I I];
+n_row_arr = [30*I 60*I];
+n_col_arr = n_row_arr;
 
 IC_pool = {'square','triangle'};
-Initial_Conditions_arr(1:length(I)) = {IC_pool{2}};
+Initial_Conditions_arr(1:length(n_col_arr)) = {IC_pool{1}};
 
-for j = 1:length(I)
+for j = 1:length(n_col_arr)
     tic;
     rho_H = rho_H_arr(j);
     h = h_arr(j);
