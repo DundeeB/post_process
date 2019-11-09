@@ -5,7 +5,7 @@ homeDir = pwd;
 addpath(homeDir);
 cd(lib);
 load('Input_parameters');
-b = [1];
+b = [0];
 if nargin == 1
     N_max = N_sph_files;
 else
@@ -16,7 +16,10 @@ H = state.H;
 sig = state.rad*2;
 for i=N_sph_files:-1:N_sph_files-N_max+1
     spheres = dlmread(files{i});
-    [b_current,~,~] = M_frustration(spheres, 1.2*sig, H, sig);
+    rhoH = str2double(regexprep(regexprep(...
+        lib,'.*rhoH=',''),'_.*',''));
+    mean_dist_spheres = sqrt(sig^3/(H*rhoH));
+    [b_current,~,~] = M_frustration(spheres, 1*mean_dist_spheres, H, sig);
     b(end+1) = b(end) + b_current;
 end
 b = b(2:end)./[1:length(b)-1];
