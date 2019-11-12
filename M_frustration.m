@@ -17,7 +17,8 @@ for i=1:N
         r2 = spheres(j,:);
         if norm(r1([1,2])-r2([1,2])) < nearest_neighbors_cut_off
             M = M + 1;
-            m = 1 - abs(r1(3) - r2(3))/(H-sig);
+%             m = 1 - 3/2*abs(r1(3) - r2(3))/(H-sig);
+            m = (r1(3)-H/2)*(r2(3)-H/2) > 0;  % true means frustrated means 1
             M_fr = M_fr + m;
         end
     end
