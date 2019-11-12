@@ -21,7 +21,7 @@ for j = 1:length(n_col_arr)
 
     state.rad = 1;
     state.H = (h+1)*2*state.rad;
-    state.cyclic_boundary = sqrt(1/(rho_H*(1+h)))*2*state.rad*sqrt(n_row*n_col)*[1 1];
+    state.cyclic_boundary = sqrt(1/(rho_H*(1+h)))*2*state.rad*sqrt(N)*[1 1];
 
     A = state.cyclic_boundary(2)*state.cyclic_boundary(1);
     eta2D = N*pi*state.rad^2/A;
