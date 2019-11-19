@@ -1,8 +1,7 @@
-h_arr = 1:-0.1:0.4;
-I = ones(1, length(h_arr));
-h_arr = [h_arr h_arr];
-rho_H_arr = 0.6*[I I];
-n_row_arr = [30*I 60*I];
+rho_H_arr = 0.6:0.1:0.8;
+I = ones(1, length(rho_H_arr));
+h_arr = 0.8*I;
+n_row_arr = 30*I;
 n_col_arr = n_row_arr;
 
 IC_pool = {'square','triangle'};

@@ -26,16 +26,21 @@ for i=1:n
     
     cd(sim_dirs{i});
     try
-        load('output.mat');
-        I1 = find(theta*180/pi==45,1,'first');
-        Sm_pi_pi(i) = Sm_theta(end-50,I1);%N_vec(i);
+%         load('output.mat');
+%         I1 = find(theta*180/pi==45,1,'first');
+%         Sm_pi_pi(i) = Sm_theta(end-50,I1);%N_vec(i);
         try
-            load('correct_psi_100_real');
-            psi_vec(i) = psi14(end);
+%             load('correct_psi_100_real');
+%             psi_vec(i) = psi14(end*2/3);
         end
         try
-            load('M_fr_100_real');
+%             load('output.mat');
+            load('output_psi14_b1_20.mat');
+%             load('output_psi14_b1.mat');
+%             b1_vec(i) = b(round(end*2/3));
             b1_vec(i) = b(end);
+%             psi_vec(i) = psi14(round(end*2/3));
+            psi_vec(i) = psi14(end);
         end
     catch err
         disp(err.message)
@@ -43,62 +48,74 @@ for i=1:n
     cd('../../');
 end
 %%
-I1 = N_vec == 100;
-I2 = N_vec == 400;
-I3 = N_vec == 900;
-I4 = N_vec == 3600;
+I1N = N_vec == 100;
+I2N = N_vec == 400;
+I3N = N_vec == 900;
+I4N = N_vec == 3600;
 figure; hold all;
 plt = @(I)plot(rho_H_vec(I), h_vec(I),'.','MarkerSize',15); 
-plt(I1);plt(I2);plt(I3);plt(I4);
-legend('100','400','900','3600');
-xlim([0 1.15]); ylim([0 1]);
+plt(I1N);plt(I2N);plt(I3N);plt(I4N);
+legend('100','400','900','3600','location','east');
+xlim([0 max(rho_H_vec)]);
+ylim([0 1.1]); grid on;
 xlabel('\rho_H');ylabel('h');
 set(gca,'FontSize',20);
 %%
-h=figure; 
-
-subplot(2,1,1); hold all;
-I1 = h_vec==0.7 & N_vec==100;
-I2 = h_vec==0.7 & N_vec==400;
-I3 = h_vec==0.7 & N_vec==900;
-I4 = h_vec==0.7 & N_vec==3600;
+h = 0.8;
+I1h = h_vec==h & I1N;
+I2h = h_vec==h & I2N;
+I3h = h_vec==h & I3N;
+I4h = h_vec==h & I4N;
 plt_psi = @(I)plot(rho_H_vec(I),psi_vec(I),'.-','MarkerSize',20);
-plt_psi(I1);plt_psi(I2);plt_psi(I3);plt_psi(I4);
-% xlabel('\rho_H'); 
-legend('h=0.7, N=100','h=0.7, N=400','h=0.7, N=900','h=0.7, N=3600',...
-    'Location','NorthWest');
-ylabel('|\psi_{14}|');
-set(gca,'FontSize',20); grid on;
-
-subplot(2,1,2); hold all;
-plt_z = @(I)plot(rho_H_vec(I),Sm_pi_pi(I),'.-','MarkerSize',20);
-plt_z(I1);plt_z(I2);plt_z(I3);plt_z(I4);
-xlabel('\rho_H');
-grid on;
-% legend('h=0.7, N=100','h=0.7, N=400','h=0.7, N=900','h=0.7, N=3600',...
+%%
+% h=figure; 
+% 
+% subplot(2,1,1); hold all;
+% plt_psi(I1);plt_psi(I2);plt_psi(I3);plt_psi(I4);
+% % xlabel('\rho_H'); 
+% legend('h=1, N=100','h=1, N=400','h=1, N=900','h=1, N=3600',...
 %     'Location','NorthWest');
-ylabel('<|z(k=(\pi,\pi))/(h\sigma)|^2>');
-set(gca,'FontSize',20);
-
-savefig(h,'graphs\magnetic_Bragg_vs_h');
+% ylabel('|\psi_{14}|');
+% set(gca,'FontSize',20); grid on;
+% xlim([0 max(rho_H_vec)]);
+% 
+% subplot(2,1,2); hold all;
+% plt_z = @(I)plot(rho_H_vec(I),Sm_pi_pi(I),'.-','MarkerSize',20);
+% plt_z(I1);plt_z(I2);plt_z(I3);plt_z(I4);
+% xlabel('\rho_H');
+% grid on;
+% % legend('h=0.7, N=100','h=0.7, N=400','h=0.7, N=900','h=0.7, N=3600',...
+% %     'Location','NorthWest');
+% ylabel('<|z(k=(\pi,\pi))/(h\sigma)|^2>');
+% set(gca,'FontSize',20);
+% xlim([0 max(rho_H_vec)]);
+% savefig(h,'graphs\magnetic_Bragg_vs_h');
 %%
 j=figure; 
 
-subplot(2,1,1); hold all;
-plt_psi(I1);plt_psi(I2);plt_psi(I3);plt_psi(I4);
+% subplot(2,1,1); 
+hold all;
+% plt_psi(I1h);plt_psi(I2h);plt_psi(I3h);plt_psi(I4h);
+plt_psi(I3h)
 % xlabel('\rho_H'); 
-legend('h=0.7, N=100','h=0.7, N=400','h=0.7, N=900','h=0.7, N=3600',...
-    'Location','NorthWest');
-ylabel('|\psi_{14}|');
+% legend('h=1, N=100','h=1, N=400','h=1, N=900','h=1, N=3600',...
+%     'Location','NorthWest');
+% ylabel('|\psi_{14}|');
+ylabel('Order parameter');
 set(gca,'FontSize',20); grid on;
+xlim([0 max(rho_H_vec)]);
 
-
-subplot(2,1,2); hold all;
-plt_b1 = @(I)plot(rho_H_vec(I),b1_vec(I),'.-','MarkerSize',20);
-plt_b1(I1);plt_b1(I2);plt_b1(I3);plt_b1(I4);
+% subplot(2,1,2);
+hold all;
+plt_b1 = @(I)plot(rho_H_vec(I),2*(b1_vec(I)-0.5),'.-','MarkerSize',20);
+% plt_b1(I1h);plt_b1(I2h);plt_b1(I3h);plt_b1(I4h);
+plt_b1(I3h);
 xlabel('\rho_H');
 grid on;
-ylabel('b_1');
+% ylabel('2(b_1-1/2)');
 set(gca,'FontSize',20);
-
+% xlim([0 max(rho_H_vec)]);
+% ylim([0.5 1]);
+legend('h=0.8, N=900, |\psi_{14}|','h=0.8, N=900, 2*(b_1-1/2)',...
+    'Location','NorthWest');
 savefig(j,'graphs\magnetic_Bragg_vs_h');
