@@ -18,7 +18,8 @@ for i=1:m
     for j=1:3
         r1 = spheres(I(j),:);
         r2 = spheres(I(j+1),:);
-        m = 1 - 3/2*abs(r1(3) - r2(3))/(H-sig);
+%         m = 1 - 3/2*abs(r1(3) - r2(3))/(H-sig);
+        m = (r1(3)-H/2)*(r2(3)-H/2)>=0;  % true = 1 --> frustration
         M_fr = M_fr + m;
         M = M + 1;
     end
