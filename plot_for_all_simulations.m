@@ -160,4 +160,4 @@ set(gca,'FontSize',20);
 h_str = ['h=' num2str(h) ', '];
 legend([h_str 'N=900, |\psi_{14}|'],[h_str 'N=900, 2*(b_1-1/2)'],...
     'Location','NorthWest');
-savefig(j,'graphs\magnetic_Bragg_vs_h');
+savefig(j,'graphs\b1_vs_h');
