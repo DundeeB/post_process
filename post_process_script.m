@@ -22,7 +22,7 @@ for i=1:n
     h_vec(i) = str2double(regexprep(regexprep(...
         sim_dirs{i},'.*h=',''),'_rhoH.*',''));
 
-    if h_vec(i) == 0.8 && N_vec(i) == 900  % && rho_H_vec(i) >= 0.4
-        post_process(sim_dirs{i},true,'output_psi14_b1_20',20);
+    if (h_vec(i) == 1 || h_vec(i) == 0.8) && N_vec(i) == 900  % && rho_H_vec(i) >= 0.4
+        post_process(sim_dirs{i},true,'output_psi1423_b1_20',20);
     end
 end

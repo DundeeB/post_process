@@ -1,6 +1,6 @@
-rho_H_arr = 0.6:0.1:0.8;
+rho_H_arr = 0.1:0.1:0.5;
 I = ones(1, length(rho_H_arr));
-h_arr = 0.8*I;
+h_arr = 1*I;
 n_row_arr = 30*I;
 n_col_arr = n_row_arr;
 

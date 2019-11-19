@@ -1,9 +1,11 @@
-function [psi14] = psi_post_process_for_lib(lib, plot_flag, N_realizations)
+function [psi14, psi23] = psi_post_process_for_lib(lib, plot_flag, N_realizations)
 switch nargin
     case 3
         psi14 = calc_psi_param_for_lib(lib, 1, 4, N_realizations);
+        psi23 = calc_psi_param_for_lib(lib, 2, 3, N_realizations);
     case 2
         psi14 = calc_psi_param_for_lib(lib, 1, 4);
+        psi23 = calc_psi_param_for_lib(lib, 2, 3);
 end
 
 I = 1:length(psi14);
