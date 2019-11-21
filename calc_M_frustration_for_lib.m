@@ -18,7 +18,8 @@ for i=N_sph_files:-1:N_sph_files-N_max+1
     spheres = dlmread(files{i});
     N = length(state.spheres);
     A = state.cyclic_boundary(1)*state.cyclic_boundary(2);
-    [b_current,~,M] = M_frustration(spheres, H, sig);
+    a = sqrt(A/N);
+    [b_current,~,M] = M_frustration(spheres, H, sig, 1.2*a);
     if ~isnan(b_current)
         b(end+1) = b(end) + b_current;
     end

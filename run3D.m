@@ -1,11 +1,11 @@
-rho_H_arr = 0.1:0.1:0.5;
+rho_H_arr = [0.95];
 I = ones(1, length(rho_H_arr));
-h_arr = 1*I;
-n_row_arr = 30*I;
-n_col_arr = n_row_arr;
+h_arr = 0.1*I;
+n_row_arr = 50*I;  % 50 works well for AF_triangle
+n_col_arr = 18*I;  % 18 works well for AF_triangle
 
-IC_pool = {'square','triangle'};
-Initial_Conditions_arr(1:length(n_col_arr)) = {IC_pool{1}};
+IC_pool = {'square','triangle','AF_triangle'};
+Initial_Conditions_arr(1:length(n_col_arr)) = {IC_pool{2}};
 
 for j = 1:length(n_col_arr)
     tic;
@@ -17,22 +17,39 @@ for j = 1:length(n_col_arr)
     C = Initial_Conditions_arr(j);
     Initial_Conditions = C{1};
     
-
     state.rad = 1;
-    state.H = (h+1)*2*state.rad;
-    state.cyclic_boundary = sqrt(1/(rho_H*(1+h)))*2*state.rad*sqrt(N)*[1 1];
+    sig = 2*state.rad;
+    state.H = (h+1)*sig;
 
+    switch Initial_Conditions
+        case IC_pool{1}
+            state.cyclic_boundary = sqrt(1/(rho_H*(1+h)))*sig*sqrt(N)*[1 1];
+            state.spheres = antiferro_rect_starting_cond3D([n_col n_row 1],...
+                [state.cyclic_boundary state.H],state.rad);
+            sim_name = ['N=' num2str(N) '_h=' num2str(h), '_rhoH=' ...
+                num2str(rho_H) '_' IC_pool{1}]
+    	case IC_pool{2}
+            a = sqrt(sig^2/(rho_H*(h+1)*sin(pi/3)));
+            Lx = n_col*a;
+            Ly = n_row*a*sin(pi/3);
+            state.cyclic_boundary = [Lx Ly];
+            state.spheres = ferro_triang_starting_cond3D([n_col n_row 1],...
+                [state.cyclic_boundary state.H],state.rad);
+            sim_name = ['N=' num2str(N) '_h=' num2str(h), '_rhoH=' ...
+                num2str(rho_H) '_' IC_pool{2}]
+        case IC_pool{3}
+            a = sqrt(2*sig^2/(rho_H*(h+1)*sin(pi/3)));
+            Lx = n_col*a;
+            Ly = n_row/2*a*sin(pi/3);
+            state.cyclic_boundary = [Lx Ly];
+            state.spheres = antiferro_triang_starting_cond3D...
+                ([n_col n_row 1],[state.cyclic_boundary state.H],state.rad);
+            sim_name = ['N=' num2str(N) '_h=' num2str(h), '_rhoH=' ...
+                num2str(rho_H) '_' IC_pool{3}]
+    end
     A = state.cyclic_boundary(2)*state.cyclic_boundary(1);
     eta2D = N*pi*state.rad^2/A;
     eta3D = N*4*pi/3*state.rad^3/(A*state.H);
-    switch Initial_Conditions
-        case IC_pool{1}
-            state.spheres = antiferro_rect_starting_cond3D([n_col n_row 1],[state.cyclic_boundary state.H],state.rad);
-            sim_name = ['N=' num2str(N) '_h=' num2str(h), '_rhoH=' num2str(rho_H) '_' IC_pool{1}]
-    	case IC_pool{2}
-            state.spheres = ferro_triang_starting_cond3D([n_col n_row 1],[state.cyclic_boundary state.H],state.rad);
-            sim_name = ['N=' num2str(N) '_h=' num2str(h), '_rhoH=' num2str(rho_H) '_' IC_pool{2}]
-    end
     title_name = ['N=' num2str(N) ', h=' num2str(h), ', \rho_H=' num2str(rho_H)];
     %%
     addpath('.');
