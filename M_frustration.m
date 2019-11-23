@@ -12,13 +12,12 @@ function [ b1, M_fr, M, N_sp ] = M_frustration( spheres, H, sig, nearest_neighbo
 % spheres have no bond at all, and so the number of interest then is N_sp/N
 % the number of spheres with bond
 
-
 TRI = delaunay(spheres(:,1),spheres(:,2));
 [N, ~] = size(spheres);
 [m, ~] = size(TRI);
 M_fr = 0;
 M = 0;
-I_sp_w_bond = zeros(N,1);
+bonds = zeros(N,N);
 Dxy_cr = sqrt( sig^2 - ( (H-sig)/2)^2 );
 for i=1:m
     I = TRI(i,:);
@@ -34,8 +33,8 @@ for i=1:m
             M = M + 1;
         end
         if Dxy <= Dxy_cr
-            I_sp_w_bond(I(j)) = 1;
-            I_sp_w_bond(I(j+1)) = 1;
+            bonds(I(j), I(j+1)) = 1;
+            bonds(I(j+1), I(j)) = 1;
         end
     end
 end
@@ -46,5 +45,14 @@ else
     disp('No bond where found');
 end
 
-N_sp = sum(I_sp_w_bond)/N;
+DG = sparse(bonds);
+[S, C] = graphconncomp(DG, 'Directed',false);
+largest_group = 0;
+for i=1:S
+    m = sum(C==i);
+    if m>largest_group
+        largest_group = m;
+    end
+end
+N_sp = largest_group/N;
 end
