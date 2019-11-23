@@ -23,6 +23,6 @@ for i=1:n
         sim_dirs{i},'.*h=',''),'_rhoH.*',''));
 
     if (h_vec(i) == 1 || h_vec(i) == 0.8) && N_vec(i) == 900
-        post_process(sim_dirs{i},true,'output_psi1423_b1_20',20);
+        post_process(sim_dirs{i},false,'output_psi14_psi23_b1_N_sp_100',100);
     end
 end

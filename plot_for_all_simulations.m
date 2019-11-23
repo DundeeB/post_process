@@ -17,6 +17,7 @@ psi14_vec = rho_H_vec;
 psi23_vec = rho_H_vec;
 Sm_pi_pi = rho_H_vec;
 b1_vec = rho_H_vec;
+N_sp_vec = rho_H_vec;
 for i=1:n
     rho_H_vec(i) = str2double(regexprep(regexprep(...
         sim_dirs{i},'.*rhoH=',''),'_.*',''));
@@ -27,8 +28,9 @@ for i=1:n
     
     cd(sim_dirs{i});
     try
-        load('output_psi1423_b1_20.mat');
+        load('output_psi14_psi23_b1_N_sp_100.mat');
         b1_vec(i) = b(end);
+        N_sp_vec(i) = N_sp(end);
         psi14_vec(i) = psi14(end);
         psi23_vec(i) = psi23(end);
     catch err
@@ -55,6 +57,7 @@ j=figure;
 plt_psi23 = @(I)plot(rho_H_vec(I),abs(psi23_vec(I)),'.','MarkerSize',20);
 plt_psi14 = @(I)plot(rho_H_vec(I),abs(psi14_vec(I)),'.','MarkerSize',20);
 plt_b1 = @(I)plot(rho_H_vec(I),b1_vec(I),'.','MarkerSize',20);
+plt_N_sp = @(I)plot(rho_H_vec(I),N_sp_vec(I),'.','MarkerSize',20);
 
 h = 1;
 I1h = h_vec==h & I1N;
@@ -68,14 +71,14 @@ ylabel('Order parameter');
 set(gca,'FontSize',20); grid on;
 xlim([0 max(rho_H_vec)]);
 hold all;
-plt_b1(I3h);
+plt_b1(I3h); plt_N_sp(I3h);
 plot([0 1.15],2/3*[1 1],'--','LineWidth',3);
 plot([0 1.15],1/2*[1 1],'--','LineWidth',3);
 xlabel('\rho_H');
 grid on;
 set(gca,'FontSize',20);
 h_str = ['h=' num2str(h) ', '];
-legend([h_str 'N=900, |\psi_{23}|'],[h_str 'N=900, b_1'],...
+legend([h_str 'N=900, |\psi_{23}|'],[h_str 'N=900, b_1'],[h_str 'N=900, N_sp'],...
     'b_1=2/3 same as frustrated triangle','b_1=1/2 completely random',...
     'Location','SouthWest');
 
@@ -93,14 +96,14 @@ xlim([0 max(rho_H_vec)]);
 
 hold all;
 plt_b1 = @(I)plot(rho_H_vec(I),b1_vec(I),'.','MarkerSize',20);
-plt_b1(I3h); 
+plt_b1(I3h); plt_N_sp(I3h); 
 plot([0 1.15],2/3*[1 1],'--','LineWidth',3);
 plot([0 1.15],1/2*[1 1],'--','LineWidth',3);
 xlabel('\rho_H');
 grid on;
 set(gca,'FontSize',20);
 h_str = ['h=' num2str(h) ', '];
-legend([h_str 'N=900, |\psi_{14}|'],[h_str 'N=900, b_1'],...
+legend([h_str 'N=900, |\psi_{14}|'],[h_str 'N=900, b_1'],[h_str 'N=900, N_sp_1'],...
     'b_1=2/3 same as frustrated triangle','b_1=1/2 completely random',...
     'Location','SouthWest');
 savefig(j,'graphs\b1_vs_h');
