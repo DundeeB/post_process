@@ -28,7 +28,7 @@ for i=1:n
     
     cd(sim_dirs{i});
     try
-        load('output_psi14_psi23_b1_N_sp_100.mat');
+        load('output_psi14_psi23_b1_N_sp_20.mat');
         b1_vec(i) = b(end);
         N_sp_vec(i) = N_sp(end);
         psi14_vec(i) = psi14(end);

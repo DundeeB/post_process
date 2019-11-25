@@ -7,7 +7,7 @@ cd(lib);
 load('Input_parameters');
 b = [0];
 N_sp = [0];
-if nargin == 1 || N_realizations > N_sph_files
+if nargin == 2 || N_realizations > N_sph_files
     N_max = N_sph_files;
 else
     N_max = N_realizations;
@@ -20,7 +20,8 @@ for i=N_sph_files:-1:N_sph_files-N_max+1
     N = length(state.spheres);
     A = state.cyclic_boundary(1)*state.cyclic_boundary(2);
     a = sqrt(A/N);
-    [b_current,~,M, N_sp_current] = M_frustration(spheres, H, sig, 1.2*a);
+    [b_current,~,M, N_sp_current] = M_frustration(spheres, H, sig, 1.2*a,...
+        state.cyclic_boundary);
     if ~isnan(b_current)
         b(end+1) = b(end) + b_current;
     end

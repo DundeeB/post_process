@@ -1,4 +1,5 @@
-function [ b1, M_fr, M, N_sp ] = M_frustration( spheres, H, sig, nearest_neighbors_cut_off)
+function [ b1, M_fr, M, N_sp ] = M_frustration( spheres, H, sig, ...
+    nearest_neighbors_cut_off, cyclic_boundary)
 %M_FRUSTRATION is the number of frustrated bonds. As it is not well define
 %for our case, we define m_fr(z1,z2) = 1-abs(z1-z2)/(H-2r), which is 1 when
 %z1=z2 meaning full frustration, and zero if they are not frustrated,
@@ -12,13 +13,12 @@ function [ b1, M_fr, M, N_sp ] = M_frustration( spheres, H, sig, nearest_neighbo
 % spheres have no bond at all, and so the number of interest then is N_sp/N
 % the number of spheres with bond
 
-TRI = delaunay(spheres(:,1),spheres(:,2));
 [N, ~] = size(spheres);
+
+TRI = delaunay(spheres(:,1),spheres(:,2));
 [m, ~] = size(TRI);
 M_fr = 0;
 M = 0;
-bonds = zeros(N,N);
-Dxy_cr = sqrt( sig^2 - ( (H-sig)/2)^2 );
 for i=1:m
     I = TRI(i,:);
     I = [I I(1)];  % add bond I(3) I(1)
@@ -32,12 +32,24 @@ for i=1:m
             M_fr = M_fr + m;
             M = M + 1;
         end
+    end
+end
+
+bonds = zeros(N,N);
+Dxy_cr = sqrt( sig^2 - ( (H-sig)/2)^2 );
+for i=1:N
+    for j=1:i-1
+        r1 = spheres(i,:);
+        r2 = spheres(j,:);
+        Dxy = cyclic_dist(r1([1,2]),r2([1,2]), cyclic_boundary);
+
         if Dxy <= Dxy_cr
-            bonds(I(j), I(j+1)) = 1;
-            bonds(I(j+1), I(j)) = 1;
+            bonds(i, j) = 1;
+            bonds(j, i) = 1;
         end
     end
 end
+
 if M ~= 0
     b1 = 1 - M_fr/M;
 else
