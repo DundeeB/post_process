@@ -1,11 +1,13 @@
-rho_H_arr = [0.95];
+rho_H_arr_half = [0.95:-0.05:0.6 0.5:-0.1:0.1];
+rho_H_arr = [rho_H_arr_half rho_H_arr_half];
+I_half = ones(1, length(rho_H_arr_half));
 I = ones(1, length(rho_H_arr));
-h_arr = 0.1*I;
+h_arr = [1*I_half 0.9*I_half];
 n_row_arr = 50*I;  % 50 works well for AF_triangle
 n_col_arr = 18*I;  % 18 works well for AF_triangle
 
 IC_pool = {'square','triangle','AF_triangle'};
-Initial_Conditions_arr(1:length(n_col_arr)) = {IC_pool{2}};
+Initial_Conditions_arr(1:length(n_col_arr)) = {IC_pool{3}};
 
 for j = 1:length(n_col_arr)
     tic;

@@ -15,6 +15,8 @@ function [ b1, M_fr, M, N_sp ] = M_frustration( spheres, H, sig, ...
 
 [N, ~] = size(spheres);
 
+bonds = zeros(N,N);
+Dxy_cr = sqrt( sig^2 - ( (H-sig)/2)^2 );
 TRI = delaunay(spheres(:,1),spheres(:,2));
 [m, ~] = size(TRI);
 M_fr = 0;
@@ -32,23 +34,27 @@ for i=1:m
             M_fr = M_fr + m;
             M = M + 1;
         end
-    end
-end
-
-bonds = zeros(N,N);
-Dxy_cr = sqrt( sig^2 - ( (H-sig)/2)^2 );
-for i=1:N
-    for j=1:i-1
-        r1 = spheres(i,:);
-        r2 = spheres(j,:);
-        Dxy = cyclic_dist(r1([1,2]),r2([1,2]), cyclic_boundary);
-
         if Dxy <= Dxy_cr
-            bonds(i, j) = 1;
-            bonds(j, i) = 1;
+            bonds(I(j), I(j+1)) = 1;
+            bonds(I(j+1), I(j)) = 1;
         end
     end
 end
+
+% bonds = zeros(N,N);
+% Dxy_cr = sqrt( sig^2 - ( (H-sig)/2)^2 );
+% for i=1:N
+%     for j=1:i-1
+%         r1 = spheres(i,:);
+%         r2 = spheres(j,:);
+%         Dxy = cyclic_dist(r1([1,2]),r2([1,2]), cyclic_boundary);
+% 
+%         if Dxy <= Dxy_cr
+%             bonds(i, j) = 1;
+%             bonds(j, i) = 1;
+%         end
+%     end
+% end
 
 if M ~= 0
     b1 = 1 - M_fr/M;

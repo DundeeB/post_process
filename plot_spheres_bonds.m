@@ -8,15 +8,13 @@ hold all;
 [N, ~] = size(sp);
 [m, ~] = size(TRI);
 bonds = zeros(N,N);
-for i=1:m
-    I = TRI(i,:);
-    I = [I I(1)];  % add bond I(3) I(1)
-    for j=1:3
-        r1 = sp(I(j),:);
-        r2 = sp(I(j+1),:);
-        Dxy = norm(r1([1,2])-r2([1,2]));
+for i=1:N
+    for j=1:N
+        r1 = sp(i,:);
+        r2 = sp(j,:);
+        Dxy = norm(r1([1,2])-r2([1,2]));  % not cyclic because it looks better
         if Dxy <= cutoff
-            I_plot = [I(j) I(j+1)];
+            I_plot = [i j];
             plot(x(I_plot),y(I_plot),'-b');
         end
     end
