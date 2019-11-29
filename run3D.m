@@ -1,4 +1,4 @@
-rho_H_arr_half = [0.95:-0.05:0.6 0.5:-0.1:0.1];
+rho_H_arr_half = [0.9:-0.05:0.6 0.5:-0.1:0.1];
 rho_H_arr = [rho_H_arr_half rho_H_arr_half];
 I_half = ones(1, length(rho_H_arr_half));
 I = ones(1, length(rho_H_arr));
@@ -106,6 +106,6 @@ for j = 1:length(n_col_arr)
     toc;
     %%
     tic;
-    post_process(['simulation-results\' sim_name],false, 'output');
+    post_process(['simulation-results\' sim_name],false, 'output_psi14_psi23_b1_N_sp_100',100);
     toc;
 end

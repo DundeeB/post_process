@@ -7,7 +7,7 @@ cd(lib);
 load('Input_parameters');
 b = [0];
 N_sp = [0];
-if nargin == 2 || N_realizations > N_sph_files
+if nargin == 1 || N_realizations > N_sph_files
     N_max = N_sph_files;
 else
     N_max = N_realizations;
