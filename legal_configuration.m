@@ -21,4 +21,3 @@ for j=[1:i-1 i+1:N]
     end
 end
 end
-
