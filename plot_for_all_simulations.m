@@ -40,7 +40,7 @@ for i=1:n
         psi14_vec(i) = psi14(end);
         psi23_vec(i) = psi23(end);
     catch err
-        disp(err.message)
+%         disp(err.message)
     end
     cd('../../');
 end
