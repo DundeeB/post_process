@@ -3,7 +3,6 @@ function [ output_args ] = plot_spheres_bonds( input_file, cutoff, H )
 sp = dlmread(input_file);
 x = sp(:,1); y = sp(:,2); z = sp(:,3);
 TRI = delaunay(x,y);
-figure;
 hold all;
 [N, ~] = size(sp);
 [m, ~] = size(TRI);
