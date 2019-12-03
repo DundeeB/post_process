@@ -1,33 +1,30 @@
-function [E, TRI] = Edges(spheres, is_del, cutoff, cyclic_boundary)
-sp = spheres;
+function [E_n_double, TRI, sp] = Edges(spheres, cutoff, cyclic_boundary)
+sp = wrap_sp_with_periodic_bd(spheres, cyclic_boundary);
 
-d = @(r1,r2) cyclic_dist(r1,r2,cyclic_boundary);
-if is_del
-    TRI = delaunay(sp(:,1),sp(:,2));
-    E = [TRI(:,1) TRI(:,2); TRI(:,2) TRI(:,3); TRI(:,3) TRI(:,1)];
-    if nargin == 4
-        Efin = [];
-        for i=1:length(E)
-            e = E(i,:);
-            r1 = sp(e(1),1:2);
-            r2 = sp(e(2),1:2);
-            if d(r1,r2) <= cutoff
-                Efin = [Efin; e];
-            end
-        end
-        E = Efin;
+d = @(r1,r2) norm(r1-r2);
+TRI = delaunay(sp(:,1),sp(:,2));
+E0 = [TRI(:,1) TRI(:,2); TRI(:,2) TRI(:,3); TRI(:,3) TRI(:,1)];
+E = [];
+for i=1:length(E0)
+    e = E0(i,:);
+    e = [min(e) max(e)];
+    r1 = sp(e(1),1:2);
+    r2 = sp(e(2),1:2);
+    if d(r1,r2) <= cutoff
+        E = [E; e];
     end
-else
-    assert(nargin == 4,'nragin shoud be 4');
-    E = [];
-    for i=1:length(sp)
-        for j=1:i-1
-            r1 = sp(i,1:2);
-            r2 = sp(j,1:2);
-            if d(r1,r2) <= cutoff
-                E = [E ; [j i]];
-            end
-        end
+end
+[~,I] = sort(E(:,1));
+E = E(I,:);
+E_n_double = [];
+for i=1:length(sp)
+    bonds_w_i = E(:,1)==i;
+    J = E(bonds_w_i,2);
+    if isempty(J)
+        continue;
     end
+    J = sort(J);
+    J = [J(~(J(1:end-1)==J(2:end))); J(end)];
+    E_n_double = [E_n_double; [ones(size(J))*i J]];
 end
 end

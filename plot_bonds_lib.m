@@ -1,4 +1,4 @@
-function [] = plot_bonds_lib(lib, plot_delaunay, cutoff)
+function [] = plot_bonds_lib(lib, plot_disclinations, cutoff)
 rho_H = str2double(regexprep(regexprep(...
     lib,'.*rhoH=',''),'_.*',''));
 N = str2double(regexprep(regexprep(...
@@ -16,26 +16,19 @@ end
 files = sorted_sphere_files_from_lib(lib);
 last_sp = [lib '\' files{end}];
 
-if plot_delaunay
-    load([lib '\Input_parameters.mat']);
-    sp = dlmread(last_sp);
-    sp = wrap_sp_with_periodic_bd(sp,state.cyclic_boundary);
+load([lib '\Input_parameters.mat']);
+sp = dlmread(last_sp);
+
+if plot_disclinations
     hold on;
-    up = sp(:,3)>H/2;
-    plot(sp(up,1),sp(up,2),'.Black','MarkerSize',10);
-    plot(sp(~up,1),sp(~up,2),'.m','MarkerSize',10);
-    spup = sp(up,:);
-    TRI = delaunay(spup(:,1),spup(:,2));
-    triplot(TRI,spup(:,1),spup(:,2));
+    spup = sp(sp(:,3)>H/2,:);
+    [ bonds, spup] = plot_spheres_bonds( spup, cutoff, H, state.cyclic_boundary );
     is = [];
     colours = [{}];
-    for i=1:length(sp(up))
-        I1 = find(TRI(:,1) == i);
-        I2 = find(TRI(:,2) == i);
-        I3 = find(TRI(:,3) == i);
-        I = [I1;I2;I3];
+    for i=1:length(spup)
+        I = find(bonds(:,1) == i | bonds(:,2) == i);
         if length(I) ~= 6
-            is = [is i];
+            is(end+1) = i;
             switch length(I)
                 case 4
                     colour = 'm';
@@ -57,11 +50,7 @@ if plot_delaunay
         plot(spup(is(k),1),spup(is(k),2),['.' c],'MarkerSize',40);
     end    
 else
-    plot_spheres_bonds(last_sp,cutoff, H);
+    [ bonds, sp] = plot_spheres_bonds( sp, cutoff, H, state.cyclic_boundary );
 end
 
-L = min(state.cyclic_boundary(1:2));
-xlim([0 L]);
-ylim([0 L]);
-axis equal;
 end
