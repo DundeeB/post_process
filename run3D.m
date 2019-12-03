@@ -1,4 +1,4 @@
-rho_H_arr = [0.6 0.7];
+rho_H_arr = [0.6 0.65 0.7 0.8:0.05:1];
 I1 = ones(1, length(rho_H_arr));
 rho_H_arr = [rho_H_arr rho_H_arr rho_H_arr];
 I = ones(1, length(rho_H_arr));
@@ -8,6 +8,9 @@ n_col_arr = 2*18*I;
 
 IC_pool = {'square','triangle','AF_triangle'};
 Initial_Conditions_arr(1:length(n_col_arr)) = {IC_pool{3}};
+
+code_dir = pwd;
+father_dir = 'C:\Users\Daniel\OneDrive - Technion\simulation-results\';
 
 for j = 1:length(n_col_arr)
     tic;
@@ -55,10 +58,10 @@ for j = 1:length(n_col_arr)
     title_name = ['N=' num2str(N) ', h=' num2str(h), ', \rho_H=' num2str(rho_H)];
     %%
     addpath('.');
-    cd('simulation-results'); mkdir(sim_name); cd(sim_name);
+    cd(father_dir); mkdir(sim_name); cd(sim_name);
     %%
     if ~legal_configuration(state,1)
-        cd('../..');
+        cd(code_dir);
         error('too many spheres');
     end
 
@@ -102,10 +105,10 @@ for j = 1:length(n_col_arr)
     savefig('Starting_and_Final_configuration.fig')
     close all;
     %%
-    cd('../../');
+    cd(code_dir);
     toc;
     %%
     tic;
-    post_process(['simulation-results\' sim_name],false, 'output_psi14_psi23_b1_N_sp_100',100);
+    post_process([father_dir sim_name],false, 'output_psi14_psi23_b1_N_sp_100',100);
     toc;
 end

@@ -4,7 +4,8 @@ h = 0.8;
 rho_H = 0.4;
 rad = 1; sig = 2*rad;
 a = sig/sqrt(rho_H*(h+1));
-lib = ['simulation-results\N=' num2str(N) '_h=' num2str(h), '_rhoH=' num2str(rho_H)];
+father_dir = 'C:\Users\Daniel\OneDrive - Technion\simulation-results\';
+lib = [father_dir 'N=' num2str(N) '_h=' num2str(h), '_rhoH=' num2str(rho_H)];
 plot_flag = true;
 N_realizations = 1.2e3;
 %% simulation dir and parameters

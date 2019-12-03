@@ -1,4 +1,4 @@
-father_dir = 'simulation-results\';
+father_dir = 'C:\Users\Daniel\OneDrive - Technion\simulation-results\';
 folds_obj = dir(father_dir);
 sim_dirs = {};
 for i=1:length(folds_obj)
@@ -7,7 +7,7 @@ for i=1:length(folds_obj)
             ~isdir([father_dir f])  
         continue
     end
-    sim_dirs{end+1} = ['simulation-results\' f];
+    sim_dirs{end+1} = [father_dir f];
 end
 n = length(sim_dirs);
 rho_H_vec = zeros(n,1);
