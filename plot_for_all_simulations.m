@@ -70,45 +70,24 @@ I1h = h_vec==h & I1N;
 I2h = h_vec==h & I2N;
 I3h = h_vec==h & I3N;
 I4h = h_vec==h & I4N;
-subplot(2,1,1); 
 hold all;
-p23 = plt_psi23(I3h,'b');
-p23_400 = plt_psi23(I2h, 'Black');
-p23_36 = plt_psi23(I4h, 'red');
+p23_400 = plt_psi23(I2h, 'm--');
+p23 = plt_psi23(I3h,'b--');
+p23_36 = plt_psi23(I4h, 'r--');
 ylabel('Order parameter');
 set(gca,'FontSize',20); grid on;
 xlim([0 max(rho_H_vec)]);
 hold all;
-p_Nsp = plt_N_sp(I3h,'m');
-p_Nsp400 = plt_N_sp(I2h,'c');
-p_Nsp36 = plt_N_sp(I4h,'g');
+p_Nsp400 = plt_N_sp(I2h,'m');
+p_Nsp = plt_N_sp(I3h,'b');
+p_Nsp36 = plt_N_sp(I4h,'r');
 xlabel('\rho_H');
 grid on;
 set(gca,'FontSize',20);
 h_str = ['h=' num2str(h) ', '];
-legend([p23 p23_400 p23_36 p_Nsp p_Nsp400 p_Nsp36],...
-    {[h_str 'N=900, |\psi_{23}|'],[h_str 'N=400 |\psi_{23}|'], [h_str 'N=3600, |\psi_{23}|']...
-    [h_str 'N=900, N_{sp}'], [h_str 'N=400, N_{sp}'], [h_str 'N=3600, N_{sp}']},...
-    'Location','NorthWest');
-
-h = 0.8;
-I1h = h_vec==h & I1N;
-I2h = h_vec==h & I2N;
-I3h = h_vec==h & I3N;
-I4h = h_vec==h & I4N;
-subplot(2,1,2); 
-hold all;
-p23 = plt_psi23(I3h,'b');
-ylabel('Order parameter');
-set(gca,'FontSize',20); grid on;
-xlim([0 max(rho_H_vec)]);
-hold all;
-p_Nsp = plt_N_sp(I3h,'m');
-xlabel('\rho_H');
-grid on;
-set(gca,'FontSize',20);
-h_str = ['h=' num2str(h) ', '];
-legend([p23 p_Nsp],{[h_str 'N=900, |\psi_{23}|'],[h_str 'N=900, N_{sp}']},...
+legend([p23_400 p23 p23_36 p_Nsp400 p_Nsp p_Nsp36],...
+    {[h_str 'N=400 |\psi_{23}|'], [h_str 'N=900, |\psi_{23}|'],[h_str 'N=3600, |\psi_{23}|']...
+    [h_str 'N=400, N_{sp}'], [h_str 'N=900, N_{sp}'], [h_str 'N=3600, N_{sp}']},...
     'Location','NorthWest');
 
 savefig(j,[code_dir '\graphs\b1_N_sp_psi_vs_h']);
