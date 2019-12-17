@@ -1,4 +1,5 @@
 code_dir = pwd;
+addpath(code_dir);
 father_dir = 'C:\Users\Daniel\OneDrive - Technion\simulation-results\';
 folds_obj = dir(father_dir);
 sim_dirs = {};
@@ -51,8 +52,8 @@ I3N = N_vec == 900;
 I4N = N_vec == 3600;
 figure; hold all;
 plt = @(I,color)plt_sort_IC(rho_H_vec(I), h_vec(I),IC_vec(I),false,color); 
-pb=plt(I1N,'b');pm=plt(I2N,'m');pB=plt(I3N,'Black');pG=plt(I4N,'Green');
-legend([pb pm pB pG],{'100','400','900','3600'},'Location','east');
+p1=plt(I1N,'Black');p2=plt(I2N,'m');p3=plt(I3N,'b');p4=plt(I4N,'r');
+legend([p1 p2 p3 p4],{'100','400','900','3600'},'Location','east');
 xlim([0 max(rho_H_vec)]);
 ylim([0 1.1]); grid on;
 xlabel('\rho_H');ylabel('h');
@@ -90,5 +91,5 @@ legend([p23_400 p23 p23_36 p_Nsp400 p_Nsp p_Nsp36],...
     [h_str 'N=400, N_{sp}'], [h_str 'N=900, N_{sp}'], [h_str 'N=3600, N_{sp}']},...
     'Location','NorthWest');
 
-savefig(j,[code_dir '\graphs\b1_N_sp_psi_vs_h']);
+savefig(j,[code_dir '\graphs\Nsp_psi23_vs_rhoH_h=1']);
 cd(code_dir);

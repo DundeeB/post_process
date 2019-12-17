@@ -1,8 +1,7 @@
-rho_H_arr = [0.6 0.65 0.7 0.8:0.05:1];
-I1 = ones(1, length(rho_H_arr));
-rho_H_arr = [rho_H_arr rho_H_arr rho_H_arr];
-I = ones(1, length(rho_H_arr));
-h_arr = [1*I1 0.9*I1];
+rho_H_arr = [0.95 1 0.6 0.65 0.7 0.8:0.05:1];
+I = ones(1, length(rho_H_arr)-2);
+h_arr = [1 1 0.9*I];
+I = ones(1, length(h_arr));
 n_row_arr = 2*50*I;
 n_col_arr = 2*18*I;
 
