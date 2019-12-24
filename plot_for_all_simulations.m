@@ -20,7 +20,6 @@ psi23_vec = rho_H_vec;
 Sm_pi_pi = rho_H_vec;
 b1_vec = rho_H_vec;
 N_sp_vec = rho_H_vec;
-IC_pool = {'square','triangle','AF_triangle'};
 IC_vec = [{}];
 for i=1:n
     rho_H_vec(i) = str2double(regexprep(regexprep(...

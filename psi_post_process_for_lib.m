@@ -9,16 +9,33 @@ switch nargin
 end
 
 if plot_flag
-    I = 1:length(psi14);
-    psi_current = diff(psi14.*I);
     h = figure; 
-    plot(I,psi14,'Black','LineWidth',3);
+    title('Convergence of \psi'); 
+    
+    subplot(2,1,1);
+    psi_abs = abs(psi14);
+    I = 1:length(psi_abs);
+    psi_current = diff(psi_abs.*I);    
+    plot(I,psi_abs,'Black','LineWidth',3);
     hold all; plot(I(1:end-1),psi_current,'b');
-    plot([0 I(end)],[psi14(end) psi14(end)],'--m','LineWidth',5);
-    title('Convergence of \psi'); ylabel('|\psi_{14}|');
-    xlabel('# of realizations summed into \psi');
-    set(gca,'FontSize',24); xlim([-10 I(end)]);
+    plot([0 I(end)],[psi_abs(end) psi_abs(end)],'--m','LineWidth',5);
+    ylabel('|\psi_{14}|');
     legend('Average \psi_{14}','\psi_{14} for current realization','Final \psi_{14}');
+    set(gca,'FontSize',24); 
+    
+    subplot(2,1,2);
+    psi_abs = abs(psi23);
+    I = 1:length(psi_abs);
+    psi_current = diff(psi_abs.*I);
+    plot(I,psi_abs,'Black','LineWidth',3);
+    hold all; plot(I(1:end-1),psi_current,'b');
+    plot([0 I(end)],[psi_abs(end) psi_abs(end)],'--m','LineWidth',5);
+    ylabel('|\psi_{23}|');
+    xlabel('# of realizations summed into \psi');
+    legend('Average \psi_{23}','\psi_{23} for current realization','Final \psi_{23}');
+    set(gca,'FontSize',24); 
+    
+    xlim([-10 I(end)]);
     savefig(h,[lib '\Convergence of psi']);
 end
 end

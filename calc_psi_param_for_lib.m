@@ -4,7 +4,16 @@ N_sph_files = length(files);
 homeDir = pwd;
 addpath(homeDir);
 cd(lib);
-load('Input_parameters');
+try
+    load('Input_parameters');
+catch err
+    load('Input_parameters_from_python');
+    state.rad = double(rad);
+    state.cyclic_boundary = [Lx Ly];
+    state.H = double(H);
+    state.spheres = dlmread('Initial Conditions');
+    save('Input_parameters','state');
+end
 psi = [0];
 if nargin == 3
     N_max = N_sph_files;

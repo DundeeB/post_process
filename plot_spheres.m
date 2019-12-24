@@ -1,7 +1,6 @@
 function [] = plot_spheres(state)
-%PLOT_SPHERES Summary of this function goes here
-%   Detailed explanation goes here
-[x,y,z] = sphere;
+figure;
+[x,y,z] = sphere(12);
 spheres = state.spheres;
 rad = state.rad;
 cyclic_boundary = state.cyclic_boundary;
