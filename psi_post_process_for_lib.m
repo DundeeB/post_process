@@ -20,8 +20,10 @@ if plot_flag
     hold all; plot(I(1:end-1),psi_current,'b');
     plot([0 I(end)],[psi_abs(end) psi_abs(end)],'--m','LineWidth',5);
     ylabel('|\psi_{14}|');
-    legend('Average \psi_{14}','\psi_{14} for current realization','Final \psi_{14}');
+    legend('Average \psi_{14}','\psi_{14} for current realization',...
+        'Final \psi_{14}','Location','NorthWest');
     set(gca,'FontSize',24); 
+    xlim([-10 I(end)]);
     
     subplot(2,1,2);
     psi_abs = abs(psi23);
@@ -32,10 +34,11 @@ if plot_flag
     plot([0 I(end)],[psi_abs(end) psi_abs(end)],'--m','LineWidth',5);
     ylabel('|\psi_{23}|');
     xlabel('# of realizations summed into \psi');
-    legend('Average \psi_{23}','\psi_{23} for current realization','Final \psi_{23}');
+    legend('Average \psi_{23}','\psi_{23} for current realization',...
+        'Final \psi_{23}','Location','NorthWest');
     set(gca,'FontSize',24); 
-    
     xlim([-10 I(end)]);
+    
     savefig(h,[lib '\Convergence of psi']);
 end
 end
