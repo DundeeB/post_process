@@ -14,7 +14,7 @@ if plot_flag
     h = figure; 
     title('Convergence of \psi'); 
     
-    subplot(2,1,1);
+    subplot(2,2,1);
     psi_abs = abs(psi14);
     I = 1:length(psi_abs);
     psi_current = diff(psi_abs.*I);    
@@ -27,7 +27,7 @@ if plot_flag
     set(gca,'FontSize',24); 
     xlim([-10 I(end)]);
     
-    subplot(2,1,2);
+    subplot(2,2,3);
     psi_abs = abs(psi23);
     I = 1:length(psi_abs);
     psi_current = diff(psi_abs.*I);
@@ -41,38 +41,33 @@ if plot_flag
     set(gca,'FontSize',24); 
     xlim([-10 I(end)]);
     
-    savefig(h,[lib '\Convergence of psi']);
-    
-    g = figure; 
-    title('Convergence of \psi16'); 
-    
-    subplot(2,1,1);
+    subplot(2,2,2);
     psi_abs = abs(psi16_up);
     I = 1:length(psi_abs);
     psi_current = diff(psi_abs.*I);    
     plot(I,psi_abs,'Black','LineWidth',3);
     hold all; plot(I(1:end-1),psi_current,'b');
     plot([0 I(end)],[psi_abs(end) psi_abs(end)],'--m','LineWidth',5);
-    ylabel('|\psi_{16}|');
+    ylabel('|\psi_{16}^{up}|');
     legend('Average \psi_{16}^{up}','\psi_{16}^{up} for current realization',...
         'Final \psi_{16}^{up}','Location','NorthWest');
     set(gca,'FontSize',24); 
     xlim([-10 I(end)]);
     
-    subplot(2,1,2);
+    subplot(2,2,4);
     psi_abs = abs(psi16_down);
     I = 1:length(psi_abs);
     psi_current = diff(psi_abs.*I);
     plot(I,psi_abs,'Black','LineWidth',3);
     hold all; plot(I(1:end-1),psi_current,'b');
     plot([0 I(end)],[psi_abs(end) psi_abs(end)],'--m','LineWidth',5);
-    ylabel('|\psi_{16}|');
+    ylabel('|\psi_{16}^{down}|');
     xlabel('# of realizations summed into \psi');
     legend('Average \psi_{16}^{down}','\psi_{16}^{down} for current realization',...
         'Final \psi_{16}^{down}','Location','NorthWest');
     set(gca,'FontSize',24); 
     xlim([-10 I(end)]);
     
-    savefig(g,[lib '\Convergence of psi16']);
+    savefig(h,[lib '\Convergence of psi']);
 end
 end
