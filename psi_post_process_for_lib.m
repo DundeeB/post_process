@@ -1,4 +1,4 @@
-function [psi14, psi23, psi16 psi16_up, psi16_down] = psi_post_process_for_lib(lib, plot_flag, N_realizations)
+function [psi14, psi23, psi16, psi16_up, psi16_down] = psi_post_process_for_lib(lib, plot_flag, N_realizations)
 switch nargin
     case 3
         psi14 = calc_psi_param_for_lib(lib, 1, 4, false, N_realizations);

@@ -26,13 +26,13 @@ j = 1;
 H = state.H;
 for i=N_sph_files:-1:N_sph_files-N_max+1
     spheres = dlmread(files{i});
-    psi(end+1) = psi(end) + psi_order_parameter(m, n, spheres, 1.1*2*state.rad,H, true);
+    psi(end+1) = psi(end) + abs(psi_order_parameter(m, n, spheres, 1.1*2*state.rad,H, true));
     if seperate_up_down
         z = spheres(:,3);
         s_up = spheres(z>H/2,:);
         s_down = spheres(z<=H/2,:);
-        psi_up(end+1) = psi(end) + psi_order_parameter(m, n, s_up, 2*1.1*2*state.rad,H, false);
-        psi_down(end+1) = psi(end) + psi_order_parameter(m, n, s_down, 2*1.1*2*state.rad,H, false);
+        psi_up(end+1) = psi(end) + abs(psi_order_parameter(m, n, s_up, 2*1.1*2*state.rad,H, false));
+        psi_down(end+1) = psi(end) + abs(psi_order_parameter(m, n, s_down, 2*1.1*2*state.rad,H, false));
     end
 end
 psi = psi(2:end)./[1:length(psi)-1];
