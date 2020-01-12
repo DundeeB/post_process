@@ -1,15 +1,23 @@
 function [] = plot_circles(state)
 spheres = state.spheres;
-rad = state.rad;
+r = state.rad;
 H = state.H;
 cyclic_boundary = state.cyclic_boundary;
-[N,~] = size(spheres);
-r = rad;
-hold on; axis equal; xlabel('X'); ylabel('Y'); set(gca,'FontSize',24);
+[N,d] = size(spheres);
+hold on; axis equal; xlabel('X'); ylabel('Y'); set(gca,'FontSize',20);
 for i=1:N
     x0 = spheres(i,1);
     y0 = spheres(i,2);
-    plot(x0 + r*cos(linspace(0,2*pi)),y0 + r*sin(linspace(0,2*pi)),'-b');
+    if d == 3
+        z = spheres(i,3);
+        if z<H/2
+            plot(x0 + r*cos(linspace(0,2*pi)),y0 + r*sin(linspace(0,2*pi)),'-b');
+        else
+            plot(x0 + r*cos(linspace(0,2*pi)),y0 + r*sin(linspace(0,2*pi)),'-m');
+        end
+    else
+        plot(x0 + r*cos(linspace(0,2*pi)),y0 + r*sin(linspace(0,2*pi)),'-b');
+    end
 end
 xmin = 0; xmax = cyclic_boundary(1);
 ymin = 0;

@@ -1,7 +1,6 @@
-function [wraped_sp] = wrap_sp_with_periodic_bd(sp,BD)
+function [wraped_sp] = wrap_sp_with_periodic_bd(sp, BD, w)
 Lx = BD(1); Ly = BD(2);
 x = sp(:,1); y = sp(:,2);
-w = 20;
 sp1 = sp(x-Lx>-w &     y<w,:) + [-Lx  Ly 0];
 sp2 = sp(              y<w,:) + [  0  Ly 0];
 sp3 = sp(x<w     &     y<w,:) + [ Lx  Ly 0];

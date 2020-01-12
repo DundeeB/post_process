@@ -1,5 +1,6 @@
 function [E_n_double, TRI, sp] = Edges(spheres, cutoff, cyclic_boundary)
-sp = wrap_sp_with_periodic_bd(spheres, cyclic_boundary);
+w = 20;
+sp = wrap_sp_with_periodic_bd(spheres, cyclic_boundary, w);
 
 d = @(r1,r2) norm(r1-r2);
 TRI = delaunay(sp(:,1),sp(:,2));
