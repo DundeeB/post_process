@@ -4,10 +4,10 @@ function [psi_mn] = psi_order_parameter(m, n, spheres, nearest_neighbors_cut_off
 psi_mn = 0;
 N_counted_sp = 0;
 for a=1:N_sp
-    [psi_n, Neighbors] = psi_n(a,n,spheres,nearest_neighbors_cut_off,H, ...
+    [psi_n_val, Neighbors] = psi_n(a,n,spheres,nearest_neighbors_cut_off,H, ...
         different_heights_cond);
     if Neighbors ~= 0
-        psi_mn = psi_mn + abs(psi_n)*exp(1i*m*angle(psi_n));
+        psi_mn = psi_mn + abs(psi_n_val)*exp(1i*m*angle(psi_n_val));
         N_counted_sp = N_counted_sp + 1;
     end
 end

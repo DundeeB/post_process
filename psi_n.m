@@ -6,7 +6,7 @@ function [psi_n,Neighbors] = psi_n(i, n, spheres, ...
 psi_n = 0;
 Neighbors = 0;
 r1 = spheres(i,:);
-for j = [1:i-1 i+1:N]
+for j = [1:i-1 i+1:length(spheres)]
     r2 = spheres(j,:);
     if norm(r1([1,2])-r2([1,2])) < nearest_neighbors_cut_off
         if different_heights_cond && (r1(3)-H/2)*(r2(3)-H/2)>0
