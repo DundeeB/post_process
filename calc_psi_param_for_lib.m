@@ -1,23 +1,9 @@
 function [psi, psi_up, psi_down] = calc_psi_param_for_lib(lib, m, n, seperate_up_down, N_realizations)
-files = sorted_sphere_files_from_lib(lib);
-N_sph_files = length(files);
-homeDir = pwd;
-addpath(homeDir);
-cd(lib);
-try
-    load('Input_parameters');
-catch err
-    load('Input_parameters_from_python');
-    state.rad = double(rad);
-    state.cyclic_boundary = [Lx Ly];
-    state.H = double(H);
-    state.spheres = dlmread('Initial Conditions');
-    save('Input_parameters','state');
-end
+load_lib;
 psi = [0];
 psi_up = [0];
 psi_down = [0];
-if nargin == 4
+if nargin == 4 || N_realizations > N_sph_files
     N_max = N_sph_files;
 else
     N_max = N_realizations;

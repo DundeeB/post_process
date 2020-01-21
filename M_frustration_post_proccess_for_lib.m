@@ -1,10 +1,7 @@
 function [ b, M, N_sp ] = M_frustration_post_proccess_for_lib(lib, plot_flag, N_realizations)
-files = sorted_sphere_files_from_lib(lib);
-N_sph_files = length(files);
-homeDir = pwd;
-addpath(homeDir);
-cd(lib);
-load('Input_parameters');
+
+load_lib;
+
 b = [0];
 N_sp = [0];
 if nargin == 2 || N_realizations > N_sph_files
