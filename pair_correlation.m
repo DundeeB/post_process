@@ -4,7 +4,6 @@ x_rotated = spheres(:,1); y_rotated = spheres(:,2);
 t = -angle(psi_order_parameter(m,n,spheres,1.2*2*state.rad,state.H,false))/(m*n);
 x = x_rotated*cos(t)-y_rotated*sin(t);
 y = x_rotated*sin(t)+y_rotated*cos(t);
-addpath('../3D Metropolis Monte Carlo/');
 xij = zeros(length(x),length(x));
 yij = zeros(length(x),length(x));
 for i=1:length(x)

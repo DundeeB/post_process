@@ -40,16 +40,5 @@ if ~isempty(find(strcmpi(varargin,'edges'), 1))
   C{2}(end) = [];
 end
 %Get polygon half widths
-wx=C{1}(:);
-wy=C{2}(:);
-% display
-figure
-H = pcolor(wx, wy, N');
-box on
-shading interp
-set(H,'edgecolor','none');
-colorbar
-colormap jet
-set(gca,'FontSize',20);
-xlabel('x');ylabel('y');
+plt_2D_bins(N,C);
 end
