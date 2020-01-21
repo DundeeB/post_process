@@ -8,6 +8,8 @@ else
     N_max = N_realizations;
 end
 N = length(state.spheres);
+spheres = dlmread(files{N_sph_files});
+state.spheres = spheres;
 [xij, yij] = pair_correlation(state,m,n);
 [Nbins,C] = hist3([xij(:) yij(:)], [N/4 N/4]);
 [Xq,Yq] = meshgrid(C{1},C{2});

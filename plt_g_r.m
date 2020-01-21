@@ -6,12 +6,12 @@ v_hat = [cos(t) sin(t)]';
 X = [xij(:) yij(:)];
 dist_vec = (v_hat*(X*v_hat)'-X')';
 dist_to_line = sqrt(dist_vec(:,1).^2+dist_vec(:,2).^2);
-Ix = dist_to_line<0.5 & dist_to_line>0 & X*v_hat>0;
+Ix = dist_to_line<0.2 & X*v_hat>0.5;
 if nargin<5 || isplot
     densityplot(xij(I_no0), yij(I_no0),[N/4 N/4]);
     xlim([-L L]); ylim([-L L]);
     hold on;
-    plot(xij(Ix),yij(Ix),'r','LineWidth',2);
+    plot(xij(Ix),yij(Ix),'.r');
     figure;
     hist(rs(Ix),N);
     xlim([0 L]);

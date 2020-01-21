@@ -1,5 +1,7 @@
 function [] = plt_g_r_from_bins(Nbins, Centers, L, t)
-N = round(sqrt(sum(Nbins(:))));
+Nsq = sum(Nbins(:));
+N = round(sqrt(Nsq));
+Nbins = Nbins * N^2/Nsq;
 [X,Y] = meshgrid(Centers{1},Centers{2});
 xij = zeros(N^2,1);
 yij = zeros(N^2,1);
@@ -11,8 +13,10 @@ for i=1:N1
         N3 = round(Nbins(i,j));
         for k=1:N3
             ind = ind + 1;
-            xij(ind) = X(i,j);
-            yij(ind) = Y(i,j);
+            xij(ind) = X(j,i);
+%             xij(ind) = Centers{1}(i);
+            yij(ind) = Y(j,i);
+%             yij(ind) = Centers{2}(j);
         end
     end
 end
