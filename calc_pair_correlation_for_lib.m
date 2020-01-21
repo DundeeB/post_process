@@ -38,9 +38,8 @@ for i=N_sph_files:-1:N_sph_files-N_max+1
 end
 Nbins2D_avg = Nbins2D_sum/reals;
 Nbins_avg = Nbins_sum/reals;
-normalization = 1;%N;
-Nbins_avg = Nbins_avg/normalization;
-Nbins2D_avg = Nbins2D_sum/normalization;
+Nbins_avg = Nbins_avg/mean(Nbins_avg);
+Nbins2D_avg = Nbins2D_sum/mean(Nbins2D_sum(:));
 if isplot
     plot(C,Nbins_avg);
     plt_2D_bins(Nbins2D_avg,C2D);
