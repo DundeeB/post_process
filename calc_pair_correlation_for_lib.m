@@ -1,4 +1,4 @@
-function [Nbins2D_avg, C2D, Nbins_avg, C] = ...
+function [Nbins2D_avg, C2D, Nbins_avg, Cp] = ...
     calc_pair_correlation_for_lib(lib, m, n, Length, angle, isplot, N_realizations)
 
 load_lib;
@@ -14,11 +14,13 @@ end
 N = length(state.spheres);
 [xij, yij,~,~] = pair_correlation(state,m,n);
 
-[Nbins2D,C2D] = hist3([xij(:) yij(:)], [N/2 N/2]);
-[Xq2D,Yq2D] = meshgrid(C2D{1},C2D{2});
+C = -Length:10*Length/N:Length;
+Cp = C(C>0);
+ctrs = {C C};
+[Nbins2D,C2D] = hist3([xij(:) yij(:)], 'Ctrs', ctrs);
 Nbins2D_sum = Nbins2D*0;
 
-[Nbins,C] = plt_g_r(xij, yij, Length, angle, false);
+[Nbins,~] = plt_g_r(xij, yij, Length, angle, Cp, false);
 Nbins_sum = Nbins*0;
 
 reals = 0;
@@ -27,25 +29,34 @@ for i=N_sph_files:-1:N_sph_files-N_max+1
     state.spheres = spheres;
     [xij, yij] = pair_correlation(state,m,n);
     
-    [Nbins2D_i,C2D_i] = hist3([xij(:) yij(:)], [N/2 N/2]);
-    [X,Y] = meshgrid(C2D_i{1},C2D_i{2});
-    Nbins2D_sum = Nbins2D_sum + interp2(X,Y, Nbins2D_i,Xq2D,Yq2D, 'spline',0);
+    [Nbins2D_i,~] = hist3([xij(:) yij(:)], 'Ctrs', ctrs);
+    Nbins2D_sum = Nbins2D_sum + Nbins2D_i;
     
-    [Nbins_i,Centers_i] = plt_g_r(xij, yij, Length, angle, false);
-    Nbins_sum = Nbins_sum + interp1(Centers_i, Nbins_i, C, 'spline',0);
+    [Nbins_i,~] = plt_g_r(xij, yij, Length, angle, Cp, false);
+    Nbins_sum = Nbins_sum + Nbins_i;
     
     reals = reals + 1;
 end
 Nbins2D_avg = Nbins2D_sum/reals;
 Nbins_avg = Nbins_sum/reals;
+
+Nbins2D_avg = Nbins2D_avg(2:end-1,2:end-1);
+C2D = {C2D{1}(2:end-1) C2D{2}(2:end-1)};
+Nbins_avg = Nbins_avg(1:end-1);
+Cp = Cp(1:end-1);
+
 Nbins_avg = Nbins_avg/mean(Nbins_avg);
-Nbins2D_avg = Nbins2D_sum/mean(Nbins2D_sum(:));
+Nbins2D_avg = Nbins2D_avg/mean(Nbins2D_avg(:));
+
 if isplot
-    plot(C,Nbins_avg);
+    plot(Cp,Nbins_avg);
+    set(gca,'FontSize',20)
+    xlabel('\Deltar (\sigma=2)');ylabel('g(r)')
+    
     plt_2D_bins(Nbins2D_avg,C2D);
     xlim([-Length Length]);ylim([-Length Length]);
     hold on;
-    plot([0 Length*cos(angle)],[0 Length*sin(angle)],'-Black');
+    plot([0 Length*cos(angle)],[0 Length*sin(angle)],'-Black','LineWidth',2);
 end
 cd(homeDir);
 end
