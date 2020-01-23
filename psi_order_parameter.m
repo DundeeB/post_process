@@ -1,18 +1,22 @@
-function [psi_mn] = psi_order_parameter(m, n, spheres, nearest_neighbors_cut_off, H, different_heights_cond)
-%psi(m,n) is the order parameter 
+function [psimn_avg] = psi_order_parameter(m, n, spheres, nearest_neighbors_cut_off, H, different_heights_cond)
+%psi(m,n) 
+% n = #number of neighbers in order phase.  
+% m = #symmetry/n
+% for example, in the honeycomb lattice we have 3 neighbors and the
+% symmetry is 6, so n=2 and m=3.
 [N_sp, ~] = size(spheres);
-psi_mn = 0;
+psimn_sum = 0;
 N_counted_sp = 0;
 for a=1:N_sp
-    [psi, Neighbors] = psi_n(a,n,spheres,nearest_neighbors_cut_off,H, ...
+    [psimn_a, Neighbors] = psimn_sum(a, m, n, spheres,nearest_neighbors_cut_off, H, ...
         different_heights_cond);
     if Neighbors ~= 0
-        psi_mn = psi_mn + abs(psi)*exp(1i*m*angle(psi));
+        psimn_sum = psimn_sum + psimn_a;
         N_counted_sp = N_counted_sp + 1;
     end
 end
 if N_counted_sp ~= 0
-    psi_mn = psi_mn/N_counted_sp;
+    psimn_avg = psimn_sum/N_counted_sp;
 end
 end
 

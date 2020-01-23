@@ -1,5 +1,5 @@
 function [Nbins2D_avg, C2D, Nbins_avg, Cp] = ...
-    calc_pair_correlation_for_lib(lib, m, n, Length, angle, isplot, N_realizations)
+    calc_positional_correlation_for_lib(lib, m, n, Length, angle, isplot, N_realizations)
 
 load_lib;
 
@@ -12,7 +12,7 @@ else
     end
 end
 N = length(state.spheres);
-[xij, yij,~,~] = pair_correlation(state,m,n);
+[xij, yij,~,~] = positional_pair(state,m,n);
 
 C = -Length:10*Length/N:Length;
 Cp = C(C>0);
@@ -27,7 +27,7 @@ reals = 0;
 for i=N_sph_files:-1:N_sph_files-N_max+1
     spheres = dlmread(files{i});
     state.spheres = spheres;
-    [xij, yij] = pair_correlation(state,m,n);
+    [xij, yij] = positional_pair(state,m,n);
     
     [Nbins2D_i,~] = hist3([xij(:) yij(:)], 'Ctrs', ctrs);
     Nbins2D_sum = Nbins2D_sum + Nbins2D_i;

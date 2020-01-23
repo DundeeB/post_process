@@ -1,4 +1,4 @@
-function [xij, yij,rs,t] = pair_correlation(state,m,n)
+function [xij, yij,rs,t] = positional_pair(state,m,n)
 spheres = state.spheres/state.rad;
 x_rotated = spheres(:,1); y_rotated = spheres(:,2);
 t = -angle(psi_order_parameter(m,n,spheres,1.2*2*state.rad,state.H,false))/(m*n);
@@ -19,5 +19,6 @@ for i=1:length(x)
         yij(i,j) = vy(k);
     end
 end
-rs = sqrt(xij(:).^2+yij(:).^2);
+% rs = sqrt(xij(:).^2+yij(:).^2);
+rs = sqrt(xij.^2+yij.^2);
 end
