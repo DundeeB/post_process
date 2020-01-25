@@ -1,6 +1,7 @@
 function [ bonds, sp] = plot_spheres_bonds( spheres, cutoff, H, cyclic_boundary )
 hold all;
-[bonds,~,sp] = Edges(spheres,cutoff,cyclic_boundary);
+w = 20;
+[bonds,~,sp] = Edges(spheres, w, cutoff, cyclic_boundary);
 x = sp(:,1); y = sp(:,2); z = sp(:,3);
 for i=1:length(bonds)
     e = bonds(i,:);

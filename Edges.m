@@ -1,6 +1,5 @@
-function [E_n_double, TRI, sp] = Edges(spheres, cutoff, cyclic_boundary)
-w = 20;
-sp = wrap_sp_with_periodic_bd(spheres, cyclic_boundary, w);
+function [E_n_double, TRI, sp] = Edges(spheres, w, cutoff, cyclic_boundary)
+sp = wrap_sp_with_periodic_bd(spheres, w, cyclic_boundary);
 
 d = @(r1,r2) norm(r1-r2);
 TRI = delaunay(sp(:,1),sp(:,2));
@@ -14,6 +13,9 @@ for i=1:length(E0)
     if d(r1,r2) <= cutoff
         E = [E; e];
     end
+end
+if isempty(E)
+    error('Found no edges at all');
 end
 [~,I] = sort(E(:,1));
 E = E(I,:);
