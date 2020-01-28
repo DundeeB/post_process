@@ -1,8 +1,6 @@
 function [ b1, M, N_sp ] = M_frustration_post_proccess_for_lib(n, lib, ...
     N_realizations, plot_flag)
-
 load_lib;
-
 if nargin < 3 || N_realizations > N_sph_files
     N_max = N_sph_files;
 else

@@ -1,4 +1,5 @@
 function psi_global = calc_psi_param_for_lib(m, n, lib, N_realizations)
+addpath('../post_process/');
 load_lib;
 if nargin == 3 || N_realizations > N_sph_files
     N_max = N_sph_files;
