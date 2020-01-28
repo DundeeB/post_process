@@ -1,4 +1,4 @@
-function [S] = calc_Sm_Bragg_for_lib(lib, k, z0, N_realizations)
+function [S] = calc_Sm_Bragg_for_lib(k, z0, lib, N_realizations)
 files = sorted_sphere_files_from_lib(lib);
 N_sph_files = length(files);
 homeDir = pwd;

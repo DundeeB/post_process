@@ -1,5 +1,5 @@
 function [S45, Sm45, Sm_theta, k45, theta] = Bragg_post_process(...
-    lib, plot_flag, N_realizations)
+    lib, N_realizations, plot_flag)
 %% simulation dir and parameters
 load([lib '\Input_parameters']);  % loads state, h, rho_H
 sim_name = ['N=' num2str(N) ' h=' num2str(h) ' \rho_H=' num2str(rho_H)];
@@ -18,9 +18,9 @@ z0 = sig*(1+h)/2;
 tic
 switch nargin
     case 3
-        S45 = calc_S_Bragg_for_lib(lib,k45, N_realizations);
+        S45 = calc_S_Bragg_for_lib(k45, lib, N_realizations);
     case 2
-        S45 = calc_S_Bragg_for_lib(lib,k45);
+        S45 = calc_S_Bragg_for_lib(k45, lib);
 end
 S45fin = abs(S45(3/4*end,:));
 toc
@@ -28,9 +28,9 @@ toc
 tic
 switch nargin
     case 3
-        Sm45 = calc_Sm_Bragg_for_lib(lib,kxy, z0, N_realizations);
+        Sm45 = calc_Sm_Bragg_for_lib(kxy, z0, lib, N_realizations);
     case 2
-        Sm45 = calc_Sm_Bragg_for_lib(lib,kxy, z0);
+        Sm45 = calc_Sm_Bragg_for_lib(kxy, z0, lib);
 end
 Sm45fin = abs(Sm45(3/4*end,:));
 toc
