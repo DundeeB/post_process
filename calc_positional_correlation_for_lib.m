@@ -12,7 +12,7 @@ else
     end
 end
 N = length(state.spheres);
-[xij, yij,~,~] = positional_pair(state,m,n);
+[xij, yij,~,~] = positional_pairs(state,m,n);
 
 C = -Length:10*Length/N:Length;
 Cp = C(C>0);
@@ -27,7 +27,7 @@ reals = 0;
 for i=N_sph_files:-1:N_sph_files-N_max+1
     spheres = dlmread(files{i});
     state.spheres = spheres;
-    [xij, yij] = positional_pair(state,m,n);
+    [xij, yij] = positional_pairs(state,m,n);
     
     [Nbins2D_i,~] = hist3([xij(:) yij(:)], 'Ctrs', ctrs);
     Nbins2D_sum = Nbins2D_sum + Nbins2D_i;
@@ -51,12 +51,16 @@ Nbins2D_avg = Nbins2D_avg/mean(Nbins2D_avg(:));
 if isplot
     plot(Cp,Nbins_avg);
     set(gca,'FontSize',20)
-    xlabel('\Deltar (\sigma=2)');ylabel('g(r)')
+    xlabel('(\Deltax^2+\Deltay^2)^{1/2} (\sigma=2)');
+    ylabel('g(r)');
     
     plt_2D_bins(Nbins2D_avg,C2D);
     xlim([-Length Length]);ylim([-Length Length]);
     hold on;
     plot([0 Length*cos(angle)],[0 Length*sin(angle)],'-Black','LineWidth',2);
+    h = colorbar;
+    set(get(h,'title'),'string','g(r)');
+    
 end
 cd(homeDir);
 end
