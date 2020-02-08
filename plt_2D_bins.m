@@ -11,5 +11,5 @@ set(H,'edgecolor','none');
 colorbar
 colormap jet
 set(gca,'FontSize',20);
-xlabel('x');ylabel('y');
+xlabel('\Deltax');ylabel('\Deltay');
 end

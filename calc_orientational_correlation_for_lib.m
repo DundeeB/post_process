@@ -1,19 +1,22 @@
 function [psipsi_avg, psipsi_avg2D, ctrs] = calc_orientational_correlation_for_lib(...
-    lib, m, n, Length, angle, isplot, N_realizations)
+    lib, m, n, Length, angle, Nbins, isplot, N_realizations)
 
 load_lib;
-
-if nargin == 7 && N_realizations < N_sph_files
-    N_max = N_realizations;
-else
-    N_max = N_sph_files;
-    if nargin == 5
-        isplot = false;
-    end
-end
 N = length(state.spheres);
+if nargin == 8 && N_realizations < N_sph_files
+    N_max = N_realizations;
+end
+if nargin < 8
+    N_max = N_sph_files;
+end
+if nargin < 7
+    isplot = false;
+end
+if nargin < 6
+    Nbins = N/9;
+end
 
-C = -Length:Length/N:Length;
+C = -Length:Length/Nbins:Length;
 ctrs = {C C};
 counts_over_reals2D = C'*C*0;
 psipsi_sum_over_reals2D = counts_over_reals2D*0;
@@ -42,17 +45,20 @@ psipsi_avg = psipsi_sum_over_reals*0;
 psipsi_avg(I) = psipsi_sum_over_reals(I)./counts_over_reals(I);
 
 if isplot
-    plot(Cp,abs(psipsi_avg));
+    plot(Cp,abs(psipsi_avg),'o--');
     set(gca,'FontSize',20)
-    xlabel('(\Deltax^2+\Deltay^2)^{1/2} (\sigma=2)');
+    xlabel('$$\sqrt{\Delta x^2+\Delta y^2}  (\sigma =2)$$',...
+        'interpreter','latex')
     ylabel('|<\psi\psi*>|');
+    grid on;
     
     plt_2D_bins(abs(psipsi_avg2D), ctrs);
     xlim([-Length Length]);ylim([-Length Length]);
     hold on;
     plot([0 Length*cos(angle)],[0 Length*sin(angle)],'-Black','LineWidth',2);
     h = colorbar;
-    set(get(h,'title'),'string','|<\psi\psi*>|');
+    set(get(h,'title'),'string','$$|<\psi\psi^*>|$$',...
+        'Interpreter','latex','fontsize',24)
 end
 cd(homeDir);
 end

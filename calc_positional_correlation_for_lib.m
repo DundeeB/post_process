@@ -50,9 +50,11 @@ Nbins2D_avg = Nbins2D_avg/mean(Nbins2D_avg(:));
 
 if isplot
     plot(Cp,Nbins_avg);
-    set(gca,'FontSize',20)
-    xlabel('(\Deltax^2+\Deltay^2)^{1/2} (\sigma=2)');
+    set(gca,'FontSize',20);
+    xlabel('$$\sqrt{\Delta x^2+\Delta y^2}  (\sigma =2)$$',...
+        'interpreter','latex');
     ylabel('g(r)');
+    grid on;
     
     plt_2D_bins(Nbins2D_avg,C2D);
     xlim([-Length Length]);ylim([-Length Length]);
