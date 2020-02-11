@@ -6,14 +6,20 @@ N = str2double(regexprep(regexprep(...
 h = str2double(regexprep(regexprep(...
     lib,'.*h=',''),'_rhoH.*',''));
 
+if plot_option<10
 figure;
 title(['N=' num2str(N) ', \rho_H=' num2str(rho_H) ', h=' num2str(h)]);
+end
 
 sig = 2; H = (h+1)*sig;
 files = sorted_sphere_files_from_lib(lib);
 last_sp = [lib '\' files{end}];
 
-load([lib '\Input_parameters.mat']);
+try
+    load([lib '\Input_parameters.mat']);
+catch err
+    load_lib;cd(home_dir);
+end
 sp = dlmread(last_sp);
 
 switch plot_option
@@ -128,6 +134,15 @@ switch plot_option
         up = sp(:,3) > H/2;
         plot(sp(up,1),sp(up,2),'oBlack','MarkerSize',15,'LineWidth',3);hold on;
         plot(sp(~up,1),sp(~up,2),'om','MarkerSize',15,'LineWidth',3);
+    case 13
+        knn_based_bonds(sp, 3, state.cyclic_boundary, true);
+        title('knn with k=3');
+    case 14
+        knn_based_bonds(sp, 4, state.cyclic_boundary, true);
+        title('knn with k=4');
+    case 16
+        knn_based_bonds(sp, 6, state.cyclic_boundary, true);
+        title('knn with k=6');
     otherwise
         if nargin == 2
             cutoff = sqrt( sig^2 - ( (H-sig)/2)^2 );
