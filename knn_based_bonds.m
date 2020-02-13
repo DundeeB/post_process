@@ -15,17 +15,17 @@ if nargin > 3 && isplot
     up = spheres(:,3) > z0;
     down = ~up;
     figure; hold on;
-    plot(x(up),y(up),'.b','MarkerSize',15);
-    plot(x(down),y(down),'.r','MarkerSize',15   );
     for i=1:length(E)
         e=E(i,:);
         if norm([x(e(1))-x(e(2)) y(e(1))-y(e(2))])<10
-            plot(x(e),y(e),'-m');
+            plot(x(e),y(e),'-b');
         end
     end
-    xlim([0 cyclic_boundary(1)]);
-    xlim([0 cyclic_boundary(2)]);
-    axis equal;
+    plot(x(up),y(up),'.k','MarkerSize',15);
+    plot(x(down),y(down),'.m','MarkerSize',15);
+    L = min(cyclic_boundary(1:2));
+    xlim([0 L]);
+    ylim([0 L]);
 end
 end
 

@@ -14,7 +14,7 @@ end
 N = length(state.spheres);
 [xij, yij,~,~] = positional_pairs(state,m,n);
 
-C = -Length:10*Length/N:Length;
+C = -Length:5*Length/N:Length;
 Cp = C(C>0);
 ctrs = {C C};
 [Nbins2D,C2D] = hist3([xij(:) yij(:)], 'Ctrs', ctrs);
@@ -49,7 +49,7 @@ Nbins_avg = Nbins_avg/mean(Nbins_avg);
 Nbins2D_avg = Nbins2D_avg/mean(Nbins2D_avg(:));
 
 if isplot
-    plot(Cp,Nbins_avg);
+    plot(Cp,Nbins_avg,'.-','MarkerSize',24);
     set(gca,'FontSize',20);
     xlabel('$$\sqrt{\Delta x^2+\Delta y^2}  (\sigma =2)$$',...
         'interpreter','latex');

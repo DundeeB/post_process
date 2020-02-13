@@ -7,7 +7,7 @@ for i=1:length(folds_obj)
     f = folds_obj(i).name;
     if sum(strcmp(f,{'.','..','Small or 2D simulations'}))||...
             ~isdir([father_dir f]) || ...
-            isempty(regexpi(f,'_ECMC')) || isempty(regexpi(f,'triang'))
+            isempty(regexpi(f,'_ECMC'))  % || isempty(regexpi(f,'triang'))
         continue
     end
     sim_dirs{end+1} = [father_dir f];
