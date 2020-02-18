@@ -12,7 +12,7 @@ else
     end
 end
 N = length(state.spheres);
-[xij, yij,~,~] = positional_pairs(state,m,n);
+[xij, yij,~,~] = positional_pairs(state, m, n, Length);
 
 C = -Length:5*Length/N:Length;
 Cp = C(C>0);

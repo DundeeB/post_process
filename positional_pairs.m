@@ -1,4 +1,7 @@
-function [xij, yij,rs,t] = positional_pairs(state,m,n)
+function [xij, yij,rs,t] = positional_pairs(state, m, n, Length)
+if nargin<4
+    Length = inf;
+end
 spheres = state.spheres/state.rad;
 Lx = state.cyclic_boundary(1);
 Ly = state.cyclic_boundary(2);
@@ -12,11 +15,13 @@ yij = zeros(length(x),length(x));
 for i=1:length(x)
     for j=1:length(x)
         dx = x(i) - x(j); 
+        dy = y(i) - y(j); 
+        if abs(dx)>Length || abs(dy)>Length
+            continue;
+        end        
         vx = [dx, (dx+Lx), (dx-Lx)];
         [~,k] = min(abs(vx));
         xij(i,j) = vx(k);
-
-        dy = y(i) - y(j); 
         vy = [dy, (dy+Ly), (dy-Ly)];
         [~,k] = min(abs(vy));
         yij(i,j) = vy(k);
