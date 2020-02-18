@@ -10,14 +10,15 @@
 import numpy, math, random
 import matplotlib.pyplot as plt
 
-x = numpy.loadtxt('config_0_718.dat')
+# x = numpy.loadtxt('config_0_718.dat')
+x = numpy.loadtxt(r'C:\Users\Daniel\Dropbox\Thesis 3D Hard Sphere Daniel Abutbul Daniel Podolsky\Papers\Simulations\Two-Step Melting in Two Dimensions - First-Order Liquid-Hexatic Transition - Supplemental Material\pp718.dat')
 N = 1048576
 sigma = 0.00046686  # for eta=0.718
 delta = 20 * sigma
 x_dist = [0, 50 * sigma, 100 * sigma, 200 * sigma]
 x_draw = [[], [], [], []]
 y_draw = [[], [], [], []]
-M = 100  # run-time: 10 minutes. For fig S 7, M=1000 was used
+M = 100  # run-time for M=100: 10 minutes. For fig S 7, M=1000 was used
 for k in range(M * N):
     i = numpy.random.randint(0, N)
     j = numpy.random.randint(0, N)
@@ -46,4 +47,4 @@ for k in range(4):
     plt.yticks([-20, 0, 20])
     plt.xticks([xmin, xmin + 20, xmax])
     cb = plt.colorbar()
-plt.savefig('correlation_0.718.png')
+plt.savefig('graphs/correlation_0.718.png')
