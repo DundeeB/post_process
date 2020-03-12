@@ -1,5 +1,7 @@
-function [E] = knn_based_bonds(spheres, k, cyclic_boundary, isplot)
+function [E] = knn_based_bonds(state, k, isplot)
 % directed graph, where E(i,2) is a nearest number of sphere E(i,1)
+spheres = state.spheres;
+cyclic_boundary = state.cyclic_boundary;
 knn = knnsearch(spheres(:,1:2), spheres(:,1:2), 'k', k+1, ...
         'Distance',@(ZI,ZJ) distfun_w_bc(ZI,ZJ,cyclic_boundary));
 E = [];
@@ -8,11 +10,10 @@ for i=1:k
 end
 [~,I] = sort(E(:,1));
 E  = E(I,:);
-if nargin > 3 && isplot
+if nargin > 2 && isplot
     x = spheres(:,1);
     y = spheres(:,2);
-    z0 = mean(spheres(:,3));
-    up = spheres(:,3) > z0;
+    up = spheres(:,3) > state.H/2;
     down = ~up;
     figure; hold on;
     for i=1:length(E)

@@ -32,7 +32,7 @@ plot([xmin xmax],[0 0],y_style);
 plot([xmin xmax],[ymax ymax],y_style);
 plot([xmin xmin],[0 ymax],'--g');
 plot([xmax xmax],[0 ymax],'--g');
-xlim([xmin-(xmax-xmin)/10 xmax+(xmax-xmin)/10]);
-ylim([ymin-(ymax-ymin)/10 ymax+(ymax-ymin)/10]);
+% xlim([xmin-(xmax-xmin)/10 xmax+(xmax-xmin)/10]);
+% ylim([ymin-(ymax-ymin)/10 ymax+(ymax-ymin)/10]);
 end
 
