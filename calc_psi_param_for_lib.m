@@ -10,7 +10,7 @@ psi_global = zeros(N_max+1,1);
 j = 1;
 for i=N_sph_files:-1:N_sph_files-N_max+1
     spheres = dlmread(files{i});
-    [psi_local, ~] = psi_mn(m, n, spheres, state.cyclic_boundary);
+    [psi_local, ~] = psi_mn(m, n, state);
     psi_global(j+1) = psi_global(j) + abs(mean(psi_local));
     j = j+1;
 end
