@@ -24,7 +24,7 @@ if nargin > 2 && isplot
     end
     plot(x(up),y(up),'.k','MarkerSize',15);
     plot(x(down),y(down),'.m','MarkerSize',15);
-    L = min(cyclic_boundary(1:2));
+    L = max(cyclic_boundary(1:2));
     xlim([0 L]);
     ylim([0 L]);
 end

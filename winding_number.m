@@ -16,4 +16,5 @@ for j=1:length(theta)-1
     [~,k] = min(abs(v));
     n = n + v(k);
 end
+n = round(n);
 end
