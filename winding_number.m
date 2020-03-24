@@ -1,4 +1,8 @@
 function [n] = winding_number(indices, psi, spheres)
+if isempty(indices)
+    n = 0;
+    return
+end
 r = spheres(indices,1:2); 
 psi = psi(indices);
 % rcm = mean(r);

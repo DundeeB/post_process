@@ -1,8 +1,5 @@
 function winding = hist_winding(lib, num, psi, E)
 load([lib '\state ' num2str(num) '.mat']);
-% load('from_ATLAS\N=3600_h=1.0_rhoH=0.85_AF_triangle_ECMC\state 17992800.mat');
-% load('from_ATLAS\N=3600_h=1.0_rhoH=0.88_AF_square_ECMC\state 12383280.mat');
-% load('from_ATLAS\N=3600_h=1.0_rhoH=0.93_AF_triangle_ECMC\state 17992800.mat');
 if nargin == 2
     [psi,E] = psi_mn(2,3,state,false);
     E = bonds_from_directed_graph(E, state, 3, true);
@@ -46,7 +43,6 @@ plot(r(I,1),r(I,2),'r','LineWidth',2);
 counts = counts/trapz(centers,counts);
 figure(2);
 plot(centers, counts,'.--','MarkerSize',20,'LineWidth',2);
-legend('pdf of winding number N=3600 h=1 \rho_H=0.93');
 set(gca,'FontSize',20);grid on;
 xlabel('winding number');
 ylabel('pdf');

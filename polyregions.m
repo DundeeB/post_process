@@ -75,7 +75,10 @@ classdef polyregions
             
             Gtmp=rmedge(G,nodeA,nodeB);
             P=shortestpath(Gtmp,nodeA,nodeB);
-
+            if isempty(P)
+                E = [];
+                return
+            end
             E=G.findedge(P,[P(2:end),P(1)]);
         end
 
@@ -102,7 +105,10 @@ classdef polyregions
                
                 E0=unassigned(1);
                 
-                [P,E]=polyshortest(obj,E0);                
+                [P,E]=polyshortest(obj,E0);
+                if isempty(P)
+                    break
+                end
                 pgon(end+1)=polyshape(x(P),y(P),'Simplify',false); 
                 nodeIndices{end+1}=P; 
                 assigned=union(assigned,E);

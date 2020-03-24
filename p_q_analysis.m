@@ -1,8 +1,5 @@
 function p = p_q_analysis(lib, num, psi, E)
 load([lib '\state ' num2str(num) '.mat']);
-% load('from_ATLAS\N=3600_h=1.0_rhoH=0.85_AF_triangle_ECMC\state 17992800.mat');
-% load('from_ATLAS\N=3600_h=1.0_rhoH=0.88_AF_square_ECMC\state 12383280.mat');
-% load('from_ATLAS\N=3600_h=1.0_rhoH=0.93_AF_triangle_ECMC\state 17992800.mat');
 if nargin == 2
     [psi,E] = psi_mn(2,3,state,false);
     E = bonds_from_directed_graph(E, state, 3, true);
@@ -57,7 +54,7 @@ m4 = @(p) k4(p)+4*k3(p)*k1(p)+3*k2(p)^2 + 6*k2(p)*k1(p)^2+k1(p)^4;
 m = @(p) [m1(p); m2(p); m3(p); m4(p)];
 eq_zero = @(p) sum((m(p)-m_).^2);
 % p = fminsearch(eq_zero, (0.1:0.1:0.4)')
-p = fmincon(eq_zero,(0.1:0.1:0.4)',[],[],[],[],[0;0;0;0],[inf;inf;inf;inf])
+p = fmincon(eq_zero,(0.1:0.1:0.4)',[],[],[],[],[0;0;0;0],[inf;inf;inf;inf]);
 %%
 figure;
 p_ = [p(1:2);0;p(3:4)];
