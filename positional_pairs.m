@@ -5,7 +5,7 @@ end
 spheres = state.spheres/state.rad;
 Lx = state.cyclic_boundary(1);
 Ly = state.cyclic_boundary(2);
-t = -1/(m*n)*angle(mean(psi_mn(m, n, spheres, state.cyclic_boundary)));
+t = -1/(m*n)*angle(mean(psi_mn(m, n, state)));
 x0 = spheres(1,1);
 y0 = spheres(1,2);
 x = (spheres(:,1)-x0)*cos(t)-(spheres(:,2)-y0)*sin(t);

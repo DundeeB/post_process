@@ -1,4 +1,6 @@
 function [d] = cyclic_dist(p1,p2,cyclic_boundary)
+p1 = p1(:);
+p2 = p2(:);
 dsq = 0;
 for i=1:length(cyclic_boundary)
     direct = p1(i)-p2(i);
