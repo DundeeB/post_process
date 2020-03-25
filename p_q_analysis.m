@@ -53,7 +53,7 @@ m3 = @(p) k3(p)+3*k2(p)*k1(p)+k1(p)^3;
 m4 = @(p) k4(p)+4*k3(p)*k1(p)+3*k2(p)^2 + 6*k2(p)*k1(p)^2+k1(p)^4;
 m = @(p) [m1(p); m2(p); m3(p); m4(p)];
 eq_zero = @(p) sum((m(p)-m_).^2);
-% p = fminsearch(eq_zero, (0.1:0.1:0.4)')
+
 p = fmincon(eq_zero,(0.1:0.1:0.4)',[],[],[],[],[0;0;0;0],[inf;inf;inf;inf]);
 %%
 figure;

@@ -23,7 +23,7 @@ for i=1:length(pgon)
 end
 
 figure;
-[counts,centers]=hist(arcs,2:15);
+[counts,centers]=hist(arcs,2:100);
 plot(centers,counts/trapz(centers,counts),'.--','MarkerSize',30,'LineWidth',2);
 set(gca,'FontSize',20);
 grid on;

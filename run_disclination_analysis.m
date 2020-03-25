@@ -12,12 +12,21 @@ close all; clc; clear all;
 % num = 17992800;
 % leg = '\rho_H=0.85';
 
-lib = 'from_ATLAS\N=3600_h=1.0_rhoH=0.55_AF_square_ECMC';
+% lib = 'from_ATLAS\N=3600_h=1.0_rhoH=0.55_AF_square_ECMC';
+% num = 17992800;
+% leg = '\rho_H=0.55';
+
+lib = 'from_ATLAS\N=3600_h=1.0_rhoH=0.5_AF_square_ECMC';
 num = 17992800;
-leg = '\rho_H=0.55';
+leg = '\rho_H=0.5';
 %%
 load([lib '\state ' num2str(num) '.mat']);
-[psi,E] = psi_mn(2,3,state,false);
+try
+    load([lib '\psi23_E3_17992800.mat']);
+    E = E3; psi = psi23;
+catch err
+    [psi,E] = psi_mn(2,3,state,false);
+end
 E = bonds_from_directed_graph(E, state, 3, true);
 hold on; quiver(state.spheres(:,1), state.spheres(:,2), real(psi), ...
     imag(psi));
