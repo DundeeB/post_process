@@ -22,7 +22,7 @@ leg = '\rho_H=0.5';
 %%
 load([lib '\state ' num2str(num) '.mat']);
 try
-    load([lib '\psi23_E3_17992800.mat']);
+    load([lib '\psi23_E3_' num2str(num) '.mat']);
     E = E3; psi = psi23;
 catch err
     [psi,E] = psi_mn(2,3,state,false);
