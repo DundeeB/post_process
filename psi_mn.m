@@ -14,6 +14,7 @@ end
 spheres = state.spheres;
 psimn_vec = zeros(length(spheres),1);
 E = knn_based_bonds(state, n, isplot);
+% E = bonds_from_directed_graph(E, state, n, true);
 psi_n = zeros(size(psimn_vec));
 Neighbors = zeros(size(psimn_vec));
 for i=1:length(E)

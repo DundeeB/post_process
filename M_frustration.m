@@ -1,4 +1,4 @@
-function [ b1, M_fr, M, N_sp ] = M_frustration(state, n)
+function [ b1, M_fr, M, N_sp ] = M_frustration(state, n, E)
 %M_FRUSTRATION is the number of frustrated bonds. We give each sphere a
 %charge of +-1, if its in the upper or lower plane. A bond is frustrated
 %then if it connect ++ or --, and unfrustrated for +-.
@@ -18,8 +18,10 @@ spheres = state.spheres;
 bonds = zeros(N,N);
 sig = state.rad*2;
 Dxy_cr = sqrt( sig^2 - ( (state.H-sig)/2)^2 );
-E_d = knn_based_bonds(state, n);
-E = bonds_from_directed_graph(E_d, state, n);  % delete many bonds
+if nargin<3
+    E_d = knn_based_bonds(state, n);
+    E = bonds_from_directed_graph(E_d, state, n);  % delete many bonds
+end
 M_fr = 0;
 M = 0;
 for i=1:length(E)
@@ -39,7 +41,7 @@ if M ~= 0
     b1 = 1 - M_fr/M;
 else
     b1 = nan;
-    disp('No bond where found');
+    disp('No bonds where found');
 end
 
 DG = sparse(bonds);

@@ -1,4 +1,4 @@
-function E = bonds_from_directed_graph(E_d, state, n, isplot)
+function [E, h] = bonds_from_directed_graph(E_d, state, n, isplot)
 if nargin<=3 
     isplot = false;
 end
@@ -43,18 +43,29 @@ for i=1:length(A)
 end
 
 if isplot
-%     figure; 
+    h=figure; 
     hold on;
+    sig = 2*state.rad;
     for i=1:length(E)
         r = sp(E(i,:),:);
         if norm(r(1,1:2)-r(2,1:2))<10
-            plot(r(:,1),r(:,2),'-c','LineWidth',1.5);
+            frust = (r(1,3)-state.H/2)*(r(2,3)-state.H/2)>0;
+            if frust
+                color = 'red';
+            else
+                color = 'c';
+            end
+            plot(r(:,1)/sig,r(:,2)/sig,['-' color],'LineWidth',1.5);
         end
     end
     up = sp(:,3)>state.H/2;
     down = ~up;
-    plot(sp(up,1),sp(up,2),'.k','MarkerSize',15);
-    plot(sp(down,1),sp(down,2),'.m','MarkerSize',15);
+    plot(sp(up,1)/sig,sp(up,2)/sig,'.k','MarkerSize',5);
+    plot(sp(down,1)/sig,sp(down,2)/sig,'.m','MarkerSize',5);
+    xlabel('x/\sigma');
+    ylabel('y/\sigma');
+    axis equal;
+    set(gca,'FontSize',20);
 end    
 end
 function dist = d(e,state)

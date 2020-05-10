@@ -1,0 +1,12 @@
+N = length(state.spheres); sig = 2*state.rad;
+A = state.cyclic_boundary(1)*state.cyclic_boundary(2);
+eta = N*sig^2/A; dr = mean(diff(rc));
+g_r = counts./(2*pi*rc*dr*eta)/N;
+I = g_r>1;
+loglog(rc/sig,g_r-1,['-' color], 'LineWidth',1,'DisplayName',name);
+hold all;
+grid off;
+set(gca,'FontSize',20);
+xlabel('\Deltar/\sigma');
+ylabel('g(r)-1');
+legend();
