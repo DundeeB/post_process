@@ -1,4 +1,5 @@
 function [] = plot_bonds_lib(lib, plot_option, cutoff)
+addpath ../..;
 rho_H = str2double(regexprep(regexprep(...
     lib,'.*rhoH=',''),'_.*',''));
 N = str2double(regexprep(regexprep(...
@@ -54,8 +55,11 @@ switch plot_option
         for k=1:length(is)
             c = colours(k);
             c = c{1};
-            plot(spup(is(k),1),spup(is(k),2),['.' c],'MarkerSize',40);
+            plot(spup(is(k),1),spup(is(k),2),['.' c],'MarkerSize',20);
         end 
+        axis equal;
+        xlim([0 state.cyclic_boundary(1)]);
+        ylim([0 state.cyclic_boundary(2)]);
     case 2
         if nargin == 2
             cutoff = inf;
@@ -134,6 +138,76 @@ switch plot_option
         up = sp(:,3) > H/2;
         plot(sp(up,1),sp(up,2),'oBlack','MarkerSize',15,'LineWidth',3);hold on;
         plot(sp(~up,1),sp(~up,2),'om','MarkerSize',15,'LineWidth',3);
+    case 5
+        sig = 2*state.rad;
+        if nargin == 2
+            cutoff = inf;
+        end
+        hold on;
+        spup = sp(sp(:,3)>H/2,:)/sig;
+        spdown = sp(sp(:,3)<=H/2,:)/sig;
+        cb = state.cyclic_boundary/sig;
+        w = 10;
+        [bonds_up,~,spup] = Edges(spup, w, cutoff, cb);
+        [bonds_down,~,spdown] = Edges(spdown, w, cutoff, cb);
+        is = [];
+        colours = [{}];
+        for i=1:length(spup)
+            I = find(bonds_up(:,1) == i | bonds_up(:,2) == i);
+            if length(I) ~= 6
+                is(end+1) = i;
+                switch length(I)
+                    case 4
+                        colour = 'm';
+                    case 5
+                        colour = 'b';
+                    case 7
+                        colour = 'g';
+                    case 8
+                        colour = 'r';
+                    otherwise
+                        colour = 'Black';
+                end
+                colours(end+1) = {colour};
+            end
+        end
+        for k=1:length(is)
+            c = colours(k);
+            c = c{1};
+            plot(spup(is(k),1),spup(is(k),2),['*' c],'MarkerSize',5);
+        end 
+        is = [];
+        colours = [{}];
+        for i=1:length(spdown)
+            I = find(bonds_down(:,1) == i | bonds_down(:,2) == i);
+            if length(I) ~= 6
+                is(end+1) = i;
+                switch length(I)
+                    case 4
+                        colour = 'm';
+                    case 5
+                        colour = 'b';
+                    case 7
+                        colour = 'g';
+                    case 8
+                        colour = 'r';
+                    otherwise
+                        colour = 'Black';
+                end
+                colours(end+1) = {colour};
+            end
+        end
+        for k=1:length(is)
+            c = colours(k);
+            c = c{1};
+            plot(spdown(is(k),1),spdown(is(k),2),['o' c],'MarkerSize',5);
+        end 
+        axis equal;
+        xlim([0 cb(1)]);
+        ylim([0 cb(2)]);
+        set(gca,'fontsize',20);
+        xlabel('x/\sigma');
+        ylabel('y/\sigma');
     case 13
         knn_based_bonds(state, 3, true);
         title('knn with k=3');

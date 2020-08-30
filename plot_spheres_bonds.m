@@ -13,8 +13,8 @@ for i=1:length(bonds)
         plot(x(e),y(e),'-b');
     end
 end
-plot(x(z>H/2),y(z>H/2),'.Black','MarkerSize',15);
-plot(x(z<=H/2),y(z<=H/2),'.m','MarkerSize',15);
+plot(x(z>H/2),y(z>H/2),'.Black','MarkerSize',10);
+plot(x(z<=H/2),y(z<=H/2),'.m','MarkerSize',10);
 L = min(cyclic_boundary(1:2));
 xlim([0 L]);
 ylim([0 L]);
