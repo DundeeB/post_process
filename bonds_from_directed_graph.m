@@ -1,4 +1,4 @@
-function [E, h] = bonds_from_directed_graph(E_d, state, n, isplot)
+    function [E, h] = bonds_from_directed_graph(E_d, state, n, isplot)
 if nargin<=3 
     isplot = false;
 end
