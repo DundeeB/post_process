@@ -1,4 +1,4 @@
-function [B, R] = collapse_burger(sim_path, a, is_plot)
+function [B, R] = collapse_burger(sim_path, a, is_plot, plot_grid)
 [burg, sp, boundaries] = visualize_burger(sim_path, is_plot);
 r = burg(:,1:2);
 b = burg(:,3:4);
@@ -31,8 +31,19 @@ for ix = 1:length(x_c)
 end
 B = [Bx' By'];
 R = [Rx' Ry'];
+I = B(:,1).^2+B(:,2).^2>1e-4;
+B = B(I,:);
+R = R(I,:);
 if nargin>2 && is_plot
     hold all;
-    quiver(R(:,1),R(:,2),B(:,1),B(:,2),0,'k','LineWidth',2)
+    quiver(R(:,1),R(:,2),B(:,1),B(:,2),0,'k','LineWidth',2);
+    if nargin>3 && plot_grid
+        for x=x_c+a/2
+            plot([x x],[0 Ly],'k');
+        end
+        for y=y_c+a/2
+            plot([0 Lx],[y y],'k');
+        end
+    end
 end
 end
