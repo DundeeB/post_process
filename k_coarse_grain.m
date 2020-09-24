@@ -1,4 +1,4 @@
-function [B, R] = coarse_grain_burger_k_means(sim_path, k, is_plot, plot_colors)
+function [B, R] = k_coarse_grain(sim_path, k, is_plot, plot_colors)
 if nargin<3
     is_plot = false;
     plot_colors=false;
