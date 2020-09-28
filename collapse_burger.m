@@ -1,7 +1,11 @@
-function [B, R] = collapse_burger(sim_path, a, is_plot, plot_grid)
-[burg, sp, boundaries] = visualize_burger(sim_path, is_plot);
-r = burg(:,1:2);
-b = burg(:,3:4);
+function [B, R] = collapse_burger(sim_path, a, is_plot, plot_grid, pair_couples)
+    [burg, sp, boundaries] = visualize_burger(sim_path, is_plot);
+if nargin>4 && pair_couples
+    [b,r] = nearest_neighbor_coarse_graining(sim_path, false, false);
+else
+    r = burg(:,1:2);
+    b = burg(:,3:4);
+end
 Lx = boundaries(1);
 Ly = boundaries(2);
 

@@ -1,4 +1,4 @@
-function [burg, sp, boundaries] = visualize_burger(sim_path, is_plot)
+function [burg, sp, boundaries] = visualize_burger(sim_path, is_plot, plot_arrows)
 burger_files = dir([sim_path '/OP/burger_vectors/vec_*.txt']);
 is = [];
 for i=1:length(burger_files)
@@ -17,11 +17,9 @@ hold all; axis equal;xlim([0 Lx]); ylim([0 Ly]);
 TRI = delaunay(sp(:,1),sp(:,2));
 % triplot(TRI,sp(:,1),sp(:,2));
 up = sp(:,3)>H/2;
-plot(sp(up,1),sp(up,2),'.k','markersize',5);
-plot(sp(~up,1),sp(~up,2),'.m','markersize',5);
-quiver(burg(:,1),burg(:,2),burg(:,3),burg(:,4),0,'r','LineWidth',1);
-% plot(burg(:,1),burg(:,2),'+r','linewidth',2);
-
-
-
+plot(sp(up,1),sp(up,2),'.k','markersize',10);
+plot(sp(~up,1),sp(~up,2),'.m','markersize',10);
+if nargin<3 || plot_arrows
+    quiver(burg(:,1),burg(:,2),burg(:,3),burg(:,4),0,'r','LineWidth',1);
+end
 end

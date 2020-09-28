@@ -3,7 +3,7 @@ function [E] = knn_based_bonds(state, k, isplot)
 spheres = state.spheres;
 cyclic_boundary = state.cyclic_boundary;
 knn = knnsearch(spheres(:,1:2), spheres(:,1:2), 'k', k+1, ...
-        'Distance',@(ZI,ZJ) distfun_w_bc(ZI,ZJ,cyclic_boundary));
+            'Distance',@(ZI,ZJ) distfun_w_bc(ZI,ZJ,cyclic_boundary));
 E = [];
 for i=1:k
     E = [E; knn(:,1) knn(:, i+1)];

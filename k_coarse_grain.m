@@ -1,4 +1,4 @@
-function [B, R] = k_coarse_grain(sim_path, k, is_plot, plot_colors)
+function [B, R] = k_coarse_grain(sim_path, k, is_plot, plot_colors, pair_couples)
 if nargin<3
     is_plot = false;
     plot_colors=false;
@@ -7,9 +7,13 @@ else
         plot_colors = false;
     end
 end
-[burg, sp, boundaries] = visualize_burger(sim_path, is_plot && (~plot_colors));
-r = burg(:,1:2);
-b = burg(:,3:4);
+[burg, sp, boundaries] = visualize_burger(sim_path, is_plot);% && (~plot_colors));
+if pair_couples
+    [b,r] = nearest_neighbor_coarse_graining(sim_path, false, false);
+else
+    r = burg(:,1:2);
+    b = burg(:,3:4);
+end
 Lx = boundaries(1);
 Ly = boundaries(2);
 
