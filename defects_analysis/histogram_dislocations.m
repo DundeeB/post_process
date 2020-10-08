@@ -3,7 +3,7 @@ load([sim_path '\Input_parameters_from_python.mat']);  % Lx Ly H
 figure;
 N = rho_H/8*Lx*Ly*H;
 unit_lattice = sqrt(Lx*Ly/N);
-b_magnitude = sort([1 sqrt(2) 2 sqrt(5) sqrt(8) 3 sqrt(10) sqrt(13) sqrt(18) 4]);
+b_magnitude = sqrt(1:16);
 eq = @(x1,x2) abs(x1-x2)<1e-4;
 n_ = @(l, B) sum(eq(sqrt(B(:,1).^2+B(:,2).^2)/unit_lattice,l))/length(B);
 
@@ -44,7 +44,7 @@ if strcmp(method,'annihilation')
     rads = 5:5:40;
     n_arr = zeros(length(rads),length(b_magnitude));
     for i=1:length(rads)
-        [B, R] = annihilate_coarse_grain(sim_path, rads(i), false);
+        [B, R] = annihilate_coarse_grain(sim_path, rads(i), false, pair_couples);
         for j=1:length(b_magnitude)
             n_arr(i,j) = n_(b_magnitude(j), B);
         end

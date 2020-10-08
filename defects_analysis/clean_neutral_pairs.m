@@ -1,12 +1,12 @@
-function [B, R] = annihilate_coarse_grain(sim_path, rad, is_plot)
+function [B, R, b, r] = clean_neutral_pairs(sim_path, rad, is_plot)
 if is_plot
     figure;
 end
 [burg, sp, boundaries] = visualize_burger(sim_path, is_plot,false);
+r = burg(:,1:2);
+b = burg(:,3:4);
 R = burg(:,1:2);
 B = burg(:,3:4);
-r = R;
-b = B;
 i=1;    
 while i<=length(R)
     I_m_i = [1:i-1 i+1:length(R)];
@@ -18,11 +18,7 @@ while i<=length(R)
     j = I_m_i(j_m_i);  % j is it's index
     if m<rad
         I_m_ij = [1:min(i,j)-1 min(i,j)+1:max(i,j)-1 max(i,j)+1:length(R)];
-        B_ = B(i,:)+B(j,:);
-        if norm(B_)>1e-3
-            B = [B(I_m_ij,:); B_];
-            R = [R(I_m_ij,:); cyclic_mean(R(i,:),R(j,:),boundaries(1:2))];
-        else
+        if norm(B(i,:)+B(j,:))<1e-3
             B = B(I_m_ij,:);
             R = R(I_m_ij,:);
         end
@@ -38,10 +34,4 @@ if is_plot
     xlim([0 boundaries(1)]);
     ylim([0 boundaries(2)]);
 end
-end
-
-
-function r_cm = cyclic_mean(r1,r2,cyclic_boundary)
-dr = cyclic_vec(r2-r1,cyclic_boundary);
-r_cm = mod((r1+(r1+dr))/2, cyclic_boundary);
 end

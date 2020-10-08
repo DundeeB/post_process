@@ -1,4 +1,4 @@
-function [B, R] = nearest_neighbor_coarse_graining(sim_path, is_plot, plot_colors)
+function [B, R, b, r] = nearest_neighbor_coarse_graining(sim_path, is_plot, plot_colors)
 [burg, sp, boundaries] = visualize_burger(sim_path, is_plot,~plot_colors);
 r = burg(:,1:2);
 b = burg(:,3:4);
@@ -14,12 +14,11 @@ all_spheres = r(:,1)>-inf;
 for i=1:length(E)
     all_spheres(E(i,1)) = false;
     all_spheres(E(i,2)) = false;
-    B_ = b(E(i,1),:)+b(E(i,2),:);
-    if norm(B_)<1e-3
+    if norm(b(E(i,1),:)+b(E(i,2),:))<1e-3
         continue
     end
-    B = [B ; B_];
-    R = [R; cyclic_mean(r(E(i,1),:),r(E(i,2),:), boundaries(1:2))];
+    B = [B ; b(E(i,1),:); b(E(i,2),:)];
+    R = [R; r(E(i,1),:); r(E(i,2),:)];
 end
 B = [B ; b(all_spheres,:)];
 R = [R ; r(all_spheres,:)];
